@@ -1,0 +1,99 @@
+<2D – CN>
+Game Design Document
+
+
+
+Name is not finalized. This name is temporary to be confirmed later
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Written by: Christopher Chraca
+Version: 1.0
+Date: 7/19/16
+
+
+Table Of Contents
+Premise
+Gameplay/Feature Set
+Purpose
+Genre
+Platform
+ESRB Rating
+Target Market
+Goals
+Player Motivation
+Play Modes
+Rules
+Challenges
+Strategies
+Theory/Game Balance
+Art Style
+
+
+
+
+
+
+
+
+
+Premise
+From your Concept Document, this can/should be more narrative/motivational with the gameplay description left for the next section.
+
+Gameplay/Feature Set
+Provide a short description of your game, along with a bulleted list corresponding to your “feature set” (features of your game that make it unique and compelling – involving any element we’ve discussed in class . . . including gameplay, technology, story, characters, visuals, sound, interface or mood).
+
+Purpose
+What is the game’s purpose? Every game should be entertaining – but some of your games will also be educational (or maybe you’ll even put together an “advertainment” game). Discuss the purpose(s) of your game and how you expect the game will be used by the players.
+
+Genre
+2D Top-Down Action RPG
+Platform
+PC
+
+ESRB Rating
+TBA
+
+Target Market
+N/A
+
+Goals
+Create a fun game with a great story and great game mechanics.
+
+Player Motivation
+N/A
+
+Play Modes
+ATM, this game will be single player only. This is to create a cohesive story line without making a reason for why there are other player in game. Also implementing multiplayer is currently out of scope.
+
+Rules
+In this section, describe the following (even if you’ve already mentioned some of this earlier in the document): Number of players, age range, approximate length of time to play, victory & loss conditions, gameplay (step-by-step), scoring, game end. Include illustrations where necessary.
+
+Challenges
+What types of challenges and obstacles do players have to face or overcome during the game? Some examples might be powerful monsters/bosses, locked doors, puzzles, mazes, riddles, trivia questions, or flying potatoes. Be specific about the challenges that tie in with your particular storyline.
+
+Strategies
+Discuss 3 strategies that players must use during the game to overcome the game’s challenges. Examples might be collecting, exploration, resource management, social interaction, direct vs stealth combat, hiding, quick reflexes, knowledge application (intrinsic or extrinsic), spatial navigation, pattern recognition, color matching, or quick reflexes.
+
+Theory/Game Balance
+What type of game theory elements are you using in the game? How are you maintaining game balance? Some examples might be transitive vs intransitive relationships, perfect vs imperfect information, Prisoner’s Dilemma or tragedy of the commons scenarios (cooperation/non zero sum games), dominant strategies, skill vs luck (randomness), and difficulty levels.
+
+Art Style
+What art styles or styles are used in the game? How do these choices contribute to the gameplay and the overall play experience? What are the challenges associated with the chosen art style? Provide some examples (images) from existing game or relevant media. Talk about characters, environment, and interface art styles.
+
+Game Design Document07/19/160Version 1.0
+
+
+
