@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 	private bool canMove;
 	public float energyCD = 0.2F;
 	public float energyCDStart = 0;
+
 	
 	//private Vector3 velocity = Vector3.zero;
 
@@ -23,9 +24,10 @@ public class PlayerController : MonoBehaviour {
 	public float dash_Cooldown = .02F;
 	public float dash_StartTime = 0F;
 	public float  dash_Speed = 0.1F;
-	public bool dashed;
+	public bool dashed, dashing;
 	public float dashDistance;
 	public float dashIFrames; //invincible frames
+	public Vector3 dashDirection, dashStart;
 
 
 	// Use this for initialization
@@ -45,7 +47,8 @@ public class PlayerController : MonoBehaviour {
 
 		Movement ();
 
-		//Dash ();
+		if(dashing)
+			Dash ();
 
 	}
 	public void useEnergy(int amount)
@@ -93,10 +96,31 @@ public class PlayerController : MonoBehaviour {
 				transform.Translate(new Vector3(0,-movespeed,0));
 				
 			}
+			if (Input.GetKeyDown (KeyCode.Space) && !dashed && !dashing) {
+				StartCoroutine (StartDash());
+			}
 		}
 	}
 
+	IEnumerator StartDash(){
+		dashed = true;
 
+		dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+		dashDirection.z = 0;
+		dashStart = transform.position;
+		dashing = true;
+			
+		yield return new WaitForSeconds (dash_Cooldown);
+		dashed = false;
+	}
+
+	public void Dash(){
+		print ("The distance " + (Vector2.Distance (dashStart, transform.position)));
+		if (Vector2.Distance (dashStart, transform.position) < dashDistance) {
+			transform.Translate (dashDirection * dash_Speed);
+		} else
+			dashing = false;
+	}
 
 	/*public void Dash(){
 		if (Input.GetKeyDown (KeyCode.Space) && Time.time > dash_StartTime) {
@@ -129,8 +153,6 @@ public class PlayerController : MonoBehaviour {
 			canMove = true;
 		}
 	}*/
-
-	
 
 }
 
