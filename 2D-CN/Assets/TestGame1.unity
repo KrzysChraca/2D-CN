@@ -424,7 +424,6 @@ GameObject:
   - 61: {fileID: 1349618452}
   - 50: {fileID: 1349618449}
   - 114: {fileID: 1349618454}
-  - 114: {fileID: 1349618453}
   - 114: {fileID: 1349618450}
   - 114: {fileID: 1349618451}
   m_Layer: 0
@@ -501,28 +500,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .319999993, y: .319999993}
---- !u!114 &1349618453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1349618447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e17a9f983ca7f944a7f5c185cc08f2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dash_Cooldown: .0199999996
-  dash_StartTime: 0
-  dash_Speed: .100000001
-  dashed: 0
-  dashDistance: 0
-  dashIFrames: 0
-  savedVelocity: {x: 0, y: 0}
-  energyUsed: 0
-  currentEnergy: 0
-  canMove: 0
-  movespeed: 0
 --- !u!114 &1349618454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,12 +518,15 @@ MonoBehaviour:
   energyCDStart: 0
   energyUsed: 0
   movespeed: .100000001
-  dash_Cooldown: .0199999996
+  dash_Cooldown: .100000001
   dash_StartTime: 0
   dash_Speed: .100000001
   dashed: 0
-  dashDistance: 0
+  dashing: 0
+  dashDistance: 4
   dashIFrames: 0
+  dashDirection: {x: 0, y: 0, z: 0}
+  dashStart: {x: 0, y: 0, z: 0}
 --- !u!212 &1349618455
 SpriteRenderer:
   m_ObjectHideFlags: 0
