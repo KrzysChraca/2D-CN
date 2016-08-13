@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour {
 
 		dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 		dashDirection.z = 0;
-		dashStart = transform.position;
+        dashStart = transform.position;
 		dashing = true;
 			
 		yield return new WaitForSeconds (dash_Cooldown);
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour {
 	public void Dash(){
 		print ("The distance " + (Vector2.Distance (dashStart, transform.position)));
 		if (Vector2.Distance (dashStart, transform.position) < dashDistance) {
-			transform.Translate (dashDirection * dash_Speed);
+			transform.Translate (dashDirection.normalized * dash_Speed);
 		} else
 			dashing = false;
 	}
