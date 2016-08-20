@@ -29,3 +29,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Library
+2D-CN/Temp/
+2D-CN/obj/
