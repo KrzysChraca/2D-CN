@@ -3,24 +3,23 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-	//-----Player Variables---------
+	#region Player_Variables
 	public int startingEnergy = 100;
 	public int currentEnergy;
 	public Slider energySlider;
 	private bool canMove;
 	public float energyCD = 0.2F;
 	public float energyCDStart = 0;
-
+	public int energyUsed;
+	public float movespeed = 0.009F;
+	#endregion
 	
 	//private Vector3 velocity = Vector3.zero;
 
-	public int energyUsed;
-	public float movespeed = 0.009F;
 
 	//private Vector3 moveDirection = new Vector3(0,0,0);
 
-	//------Dash Variables------
-
+	#region Dash_Variables
 	public float dash_Cooldown = .02F;
 	public float dash_StartTime = 0F;
 	public float  dash_Speed = 0.1F;
@@ -28,6 +27,16 @@ public class PlayerController : MonoBehaviour {
 	public float dashDistance;
 	public float dashIFrames; //invincible frames
 	public Vector3 dashDirection, dashStart;
+	#endregion
+
+	#region Attack_Variables
+	float attackCooldown = 0.5F;
+	private float attackTimer = 0F;
+	private bool attacking = false;
+	public Collider2D attackTrigger;
+	private bool attacked;
+	public Vector3 attackDirection;
+	#endregion
 
 
 	// Use this for initialization
@@ -35,7 +44,8 @@ public class PlayerController : MonoBehaviour {
 		currentEnergy = startingEnergy;
 		//energySlider.value = currentEnergy;
 		canMove = true;
-
+		attackTrigger.enabled = false;
+		attacked = false;
 	}
 	
 	// Update is called once per frame
@@ -46,9 +56,11 @@ public class PlayerController : MonoBehaviour {
 		gainEnergy ();
 
 		Movement ();
-
+		Attack ();
 		if(dashing)
 			Dash ();
+		if (attacking)
+			Attacking ();
 
 	}
 	public void useEnergy(int amount)
@@ -74,32 +86,52 @@ public class PlayerController : MonoBehaviour {
 	public void Movement(){
 			if(canMove){
 			if (Input.GetKey (KeyCode.A)) {
-				
 				transform.Translate(new Vector3(-movespeed,0,0));
-				
 			}
 			
 			if (Input.GetKey (KeyCode.D)) {
-
 				transform.Translate(new Vector3(movespeed,0,0));
-				
 			}
 			
 			if (Input.GetKey (KeyCode.W)) {
-				
 				transform.Translate(new Vector3(0,movespeed,0));
-				
 			}
 			
 			if (Input.GetKey (KeyCode.S)) {
-				
 				transform.Translate(new Vector3(0,-movespeed,0));
-				
 			}
 			if (Input.GetKeyDown (KeyCode.Space) && !dashed && !dashing) {
 				StartCoroutine (StartDash());
 			}
 		}
+	}
+
+	public void Attack(){
+		if (Input.GetKeyDown (KeyCode.Mouse0) && !attacking && Time.time > attackTimer) {
+			attacking = true;
+			Debug.Log ("Mouse pressed");
+			attackTrigger.enabled = true;
+			attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+			attackDirection.z = 0;
+			float angle = Mathf.Atan2 (attackDirection.x, attackDirection.y) * Mathf.Rad2Deg;
+			attackTrigger.transform.rotation = Quaternion.Euler(new Vector3(0,0,angle));
+
+			if (attacking) {
+				Debug.Log ("Attacking = true");
+				attackTimer = Time.time + attackCooldown;
+				attacked = true;
+			}
+		}
+		if(Time.time > attackTimer + attackCooldown && attacked == true) {
+			Debug.Log ("Attacking = false");
+			attacking = false;
+			attackTrigger.enabled = false;
+			attacked = false;
+		}
+	}
+
+	private void Attacking(){
+		attackTrigger.transform.RotateAround (attackTrigger.transform.position, new Vector3(0,0,1), 100*Time.deltaTime);
 	}
 
 	IEnumerator StartDash(){
@@ -115,7 +147,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Dash(){
-		print ("The distance " + (Vector2.Distance (dashStart, transform.position)));
 		if (Vector2.Distance (dashStart, transform.position) < dashDistance) {
 			transform.Translate (dashDirection.normalized * dash_Speed);
 		} else
