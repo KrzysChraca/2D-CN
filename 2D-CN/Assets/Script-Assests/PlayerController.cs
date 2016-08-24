@@ -3,23 +3,17 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-	#region Player_Variables
+	//---Player_Variables
+	private bool canMove;
 	public int startingEnergy = 100;
 	public int currentEnergy;
 	public Slider energySlider;
-	private bool canMove;
 	public float energyCD = 0.2F;
 	public float energyCDStart = 0;
 	public int energyUsed;
 	public float movespeed = 0.009F;
-	#endregion
-	
-	//private Vector3 velocity = Vector3.zero;
 
-
-	//private Vector3 moveDirection = new Vector3(0,0,0);
-
-	#region Dash_Variables
+	//---Dash_Variables
 	public float dash_Cooldown = .02F;
 	public float dash_StartTime = 0F;
 	public float  dash_Speed = 0.1F;
@@ -27,20 +21,19 @@ public class PlayerController : MonoBehaviour {
 	public float dashDistance;
 	public float dashIFrames; //invincible frames
 	public Vector3 dashDirection, dashStart;
-	#endregion
 
-	#region Attack_Variables
+	//---Attack_Variables
 	float attackCooldown = 0.5F;
 	private float attackTimer = 0F;
 	private bool attacking = false;
 	public Collider2D attackTrigger;
 	private bool attacked;
 	public Vector3 attackDirection;
-	#endregion
+    float angle;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		currentEnergy = startingEnergy;
 		//energySlider.value = currentEnergy;
 		canMove = true;
@@ -109,14 +102,16 @@ public class PlayerController : MonoBehaviour {
 	public void Attack(){
 		if (Input.GetKeyDown (KeyCode.Mouse0) && !attacking && Time.time > attackTimer) {
 			attacking = true;
-			Debug.Log ("Mouse pressed");
-			attackTrigger.enabled = true;
-			attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-			attackDirection.z = 0;
-			float angle = Mathf.Atan2 (attackDirection.x, attackDirection.y) * Mathf.Rad2Deg;
-			attackTrigger.transform.rotation = Quaternion.Euler(new Vector3(0,0,angle));
 
-			if (attacking) {
+			attackTrigger.enabled = true;
+
+            attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition); //- transform.position;
+            attackDirection.z = transform.position.z;
+			angle = Mathf.Atan2 (attackDirection.x, attackDirection.y) * Mathf.Rad2Deg;
+			Debug.Log ("Angle to rotate " + angle%360);
+            attackTrigger.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+            if (attacking) {
 				Debug.Log ("Attacking = true");
 				attackTimer = Time.time + attackCooldown;
 				attacked = true;
@@ -131,8 +126,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Attacking(){
-		attackTrigger.transform.RotateAround (attackTrigger.transform.position, new Vector3(0,0,1), 100*Time.deltaTime);
-	}
+        
+        //attackTrigger.transform.RotateAround (attackTrigger.transform.position, new Vector3(0,0,1), 100*Time.deltaTime);
+    }
 
 	IEnumerator StartDash(){
 		dashed = true;
