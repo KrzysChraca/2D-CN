@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour {
 	public Collider2D attackTrigger;
 	private bool attacked;
 	public Vector3 attackDirection;
-    float angle;
+    public float attackAngle, 
+        attackSpeed,
+        attackOffset = 30;
 
 
     // Use this for initialization
@@ -61,9 +63,6 @@ public class PlayerController : MonoBehaviour {
 		currentEnergy -= amount;
 		Debug.Log (amount + "minus" + currentEnergy);
 	}
-
-
-
 
 	public void gainEnergy(){
 		if(currentEnergy != 100)
@@ -105,11 +104,16 @@ public class PlayerController : MonoBehaviour {
 
 			attackTrigger.enabled = true;
 
-            attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition); //- transform.position;
+            attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition);//take the mouse position from world space
             attackDirection.z = transform.position.z;
-			angle = Mathf.Atan2 (attackDirection.x, attackDirection.y) * Mathf.Rad2Deg;
-			Debug.Log ("Angle to rotate " + angle%360);
-            attackTrigger.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            attackDirection = attackDirection.normalized;
+
+            Vector3 relativeDirection = attackTrigger.transform.InverseTransformDirection(attackDirection); //Convert the direction into the local space
+            attackAngle = Mathf.Atan2(relativeDirection.y, relativeDirection.x) * Mathf.Rad2Deg;
+
+            attackTrigger.transform.Rotate(0,0,attackAngle + attackOffset);
+
+            Debug.DrawLine(attackTrigger.transform.position, attackDirection);
 
             if (attacking) {
 				Debug.Log ("Attacking = true");
@@ -126,8 +130,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Attacking(){
-        
-        //attackTrigger.transform.RotateAround (attackTrigger.transform.position, new Vector3(0,0,1), 100*Time.deltaTime);
+        attackTrigger.transform.RotateAround (attackTrigger.transform.position, new Vector3(0,0,1), -120*Time.deltaTime);
     }
 
 	IEnumerator StartDash(){
