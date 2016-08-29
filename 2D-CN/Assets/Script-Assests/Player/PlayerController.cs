@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour {
             Vector3 relativeDirection = attackTrigger.transform.InverseTransformDirection(attackDirection); //Convert the direction into the local space
             attackAngle = Mathf.Atan2(relativeDirection.y, relativeDirection.x) * Mathf.Rad2Deg;
 
-            attackTrigger.transform.Rotate(0,0,attackAngle + attackOffset);
+            attackTrigger.transform.Rotate(0,0,attackAngle);
 
             Debug.DrawLine(attackTrigger.transform.position, attackDirection);
 
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Attacking(){
-        attackTrigger.transform.RotateAround (attackTrigger.transform.position, new Vector3(0,0,1), -120*Time.deltaTime);
+        //attackTrigger.transform.RotateAround (attackTrigger.transform.position, Vector3.forward, -100*Time.deltaTime);
     }
 
 	IEnumerator StartDash(){
@@ -185,4 +185,3 @@ public class PlayerController : MonoBehaviour {
 	}*/
 
 }
-
