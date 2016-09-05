@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour {
 	public Vector3 attackDirection;
     public float attackAngle, 
         attackSpeed,
+        attackRotUp,
+        attackRotLow,
         attackOffset = 30;
 
 
@@ -104,16 +106,21 @@ public class PlayerController : MonoBehaviour {
 
 			attackTrigger.enabled = true;
 
-            attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition);//take the mouse position from world space
+            attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //Get the direction towards the mouse
             attackDirection.z = transform.position.z;
             attackDirection = attackDirection.normalized;
 
-            Vector3 relativeDirection = attackTrigger.transform.InverseTransformDirection(attackDirection); //Convert the direction into the local space
-            attackAngle = Mathf.Atan2(relativeDirection.y, relativeDirection.x) * Mathf.Rad2Deg;
-
-            attackTrigger.transform.Rotate(0,0,attackAngle);
-
-            Debug.DrawLine(attackTrigger.transform.position, attackDirection);
+            //Vector3 relativeDirection = attackTrigger.transform.InverseTransformDirection(attackDirection); //Convert the direction into the local space
+            //attackAngle = Mathf.Atan2(relativeDirection.y, relativeDirection.x) * Mathf.Rad2Deg;
+            attackAngle = Utility._util.RotateTowards(attackDirection, attackTrigger.transform);
+            /*if (attackDirection.x < 0)
+                attackAngle -= attackOffset;
+            else attackAngle += attackOffset;*/
+            attackRotLow = attackAngle - attackOffset / 2;
+            attackRotUp = attackAngle + attackOffset / 2;
+			//Debug.Log(string.Format("Controller angle:{0} and the angle from Utility: {1} \nattackDirection: {2} ", attackAngle, Utility._util.RotateTowards(attackDirection,attackTrigger.transform),relativeDirection));
+            attackTrigger.transform.Rotate(0, 0, attackAngle);
+            //Debug.DrawLine(attackTrigger.transform.position, attackDirection, Color.red, 2.0f);
 
             if (attacking) {
 				Debug.Log ("Attacking = true");
@@ -130,7 +137,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Attacking(){
-        //attackTrigger.transform.RotateAround (attackTrigger.transform.position, Vector3.forward, -100*Time.deltaTime);
+        //attackTrigger.transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(0, 0, attackRotUp), Quaternion.Euler(0, 0, attackRotLow), attackSpeed*Time.deltaTime);
+        //attackTrigger.transform.RotateAround (attackTrigger.transform.position, Vector3.forward, -attackSpeed*Time.deltaTime);
     }
 
 	IEnumerator StartDash(){
