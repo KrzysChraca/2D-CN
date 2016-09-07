@@ -23,11 +23,13 @@ public class PlayerController : MonoBehaviour {
 	public Vector3 dashDirection, dashStart;
 
 	//---Attack_Variables
-	float attackCooldown = 0.5F;
-	private float attackTimer = 0F;
+	public float attackDuration = 0.1F; //How long the attack will last
+	public float attackCooldown = 0.2F; //How long till the player can do another attack
+	private float attackTimer = 0F;     //Timer for Attack Cooldown
+	private float attackTimerDur = 0F;  //Timer for Attack Duration
 	private bool attacking = false;
-	public Collider2D attackTrigger;
 	private bool attacked;
+	public Collider2D attackTrigger;
 	public Vector3 attackDirection;
     public float attackAngle, 
         attackSpeed,
@@ -124,15 +126,20 @@ public class PlayerController : MonoBehaviour {
 
             if (attacking) {
 				Debug.Log ("Attacking = true");
-				attackTimer = Time.time + attackCooldown;
+				attackTimerDur = Time.time + attackCooldown;
+				attackTimer = Time.time + attackDuration;
 				attacked = true;
 			}
 		}
-		if(Time.time > attackTimer + attackCooldown && attacked == true) {
+		if(Time.time > attackTimerDur + attackDuration && attacked == true) {
 			Debug.Log ("Attacking = false");
-			attacking = false;
+
 			attackTrigger.enabled = false;
+
+		}
+		if(Time.time > attackTimer + attackCooldown && attacked == true){
 			attacked = false;
+			attacking = false;
 		}
 	}
 
