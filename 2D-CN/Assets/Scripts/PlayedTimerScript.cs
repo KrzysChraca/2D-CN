@@ -16,7 +16,7 @@ public class PlayedTimerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-//		Debug.Log (Timer ());
+		    //Debug.Log (Timer ())
 
 	}
 
@@ -32,11 +32,6 @@ public class PlayedTimerScript : MonoBehaviour {
 		return timerFormatted;
 
 	}
-
-	void StopTimer(){
-		//Create function to stop timer when in pause menu or when exiting game.
-	}
-
 	void SaveTimer(){	
 		//create function to save timer.
 	}

@@ -11,20 +11,20 @@ public class PlayerController : MonoBehaviour {
 	public float energyCD = 0.2F;
 	public float energyCDStart = 0;
 	public int energyUsed;
-	public float movespeed = 0.009F;
+	public float movespeed = 0.15F;
 
 	//---Dash_Variables
-	public float dash_Cooldown = .02F;
+	public float dash_Cooldown = .25F;
 	public float dash_StartTime = 0F;
-	public float  dash_Speed = 0.1F;
+	public float  dash_Speed = 0.5F;
 	public bool dashed, dashing;
-	public float dashDistance;
+	public float dashDistance = 4F;
 	public float dashIFrames; //invincible frames
 	public Vector3 dashDirection, dashStart;
 
 	//---Attack_Variables
 	public float attackDuration = 0.1F; //How long the attack will last
-	public float attackCooldown = 0.2F; //How long till the player can do another attack
+	public float attackCooldown = 1F; //How long till the player can do another attack
 	private float attackTimer = 0F;     //Timer for Attack Cooldown
 	private float attackTimerDur = 0F;  //Timer for Attack Duration
 	private bool attacking = false;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Attack(){
-		if (Input.GetKeyDown (KeyCode.Mouse0) && !attacking && Time.time > attackTimer) {
+		if (Input.GetKeyDown (KeyCode.Mouse0) && !attacking && Time.time > attackTimer && Time.time > attackTimerDur && !dashing) {
 			attacking = true;
 
 			attackTrigger.enabled = true;
@@ -126,19 +126,20 @@ public class PlayerController : MonoBehaviour {
 
             if (attacking) {
 				Debug.Log ("Attacking = true");
-				attackTimerDur = Time.time + attackCooldown;
-				attackTimer = Time.time + attackDuration;
+				attackTimerDur = Time.time + attackDuration;
+				attackTimer = Time.time + attackCooldown ;
 				attacked = true;
 			}
 		}
 		if(Time.time > attackTimerDur + attackDuration && attacked == true) {
-			Debug.Log ("Attacking = false");
+			//Debug.Log ("AttackTrigger = false");
 
 			attackTrigger.enabled = false;
 
 		}
 		if(Time.time > attackTimer + attackCooldown && attacked == true){
-			attacked = false;
+            Debug.Log("Attacking = false");
+            attacked = false;
 			attacking = false;
 		}
 	}
@@ -160,14 +161,21 @@ public class PlayerController : MonoBehaviour {
 		dashed = false;
 	}
 
-	public void Dash(){
-		if (Vector2.Distance (dashStart, transform.position) < dashDistance) {
-			transform.Translate (dashDirection.normalized * dash_Speed);
-		} else
-			dashing = false;
-	}
+	public void Dash()
+    {
+        if (Vector2.Distance(dashStart, transform.position) < dashDistance)
+        {
+            canMove = false;
+            attackTrigger.enabled = false;
+            transform.Translate(dashDirection.normalized * dash_Speed);
+        } else
+        {
+            dashing = false;
+            canMove = true;
+        }
+    }
 
-	/*public void Dash(){
+    /*public void Dash(){
 		if (Input.GetKeyDown (KeyCode.Space) && Time.time > dash_StartTime) {
 			
 			if(energyUsed <= currentEnergy){
@@ -198,5 +206,14 @@ public class PlayerController : MonoBehaviour {
 			canMove = true;
 		}
 	}*/
+
+
+    //for locating where player is
+    private static Location location;
+    public static Location GetLocation
+    {
+        get { return location; }
+    }
+
 
 }
