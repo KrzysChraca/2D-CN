@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 			Dash ();
         
         if (pAttack.meleeAttacking)
-            pAttack.MeleeDuration();
+            pAttack.MeleeDuration();            
 
     }
 	public void useEnergy(int amount)
@@ -99,7 +99,8 @@ public class PlayerController : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.Mouse1) && Time.time > pAttack.attackTimer && Time.time > pAttack.attackTimerDur && actionAvailable)
             {
-                
+                pAttack.RangedSetup();
+                actionAvailable = false;
             }
         }
 	}

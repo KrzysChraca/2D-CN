@@ -374,7 +374,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1289295203}
-  - 114: {fileID: 1289295202}
   - 61: {fileID: 1289295201}
   m_Layer: 0
   m_Name: attackTrigger
@@ -397,18 +396,6 @@ BoxCollider2D:
   m_Offset: {x: 0.20948775, y: -0.031782098}
   serializedVersion: 2
   m_Size: {x: 0.23039262, y: 0.107337214}
---- !u!114 &1289295202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1289295200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f1c5277c4bd3a24e9d14c7ca339289b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmg: 10
 --- !u!4 &1289295203
 Transform:
   m_ObjectHideFlags: 0
@@ -432,9 +419,8 @@ GameObject:
   - 212: {fileID: 1349618455}
   - 61: {fileID: 1349618452}
   - 50: {fileID: 1349618449}
-  - 114: {fileID: 1349618454}
+  - 114: {fileID: 1349618450}
   - 114: {fileID: 1349618451}
-  - 114: {fileID: 1349618453}
   m_Layer: 0
   m_Name: chara1
   m_TagString: Untagged
@@ -473,6 +459,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1349618450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1349618447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc38362a7f3a7040b2deb42cd9a828b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionAvailable: 0
+  startingEnergy: 100
+  currentEnergy: 0
+  energySlider: {fileID: 0}
+  energyCD: 0.2
+  energyCDStart: 0
+  energyUsed: 0
+  movespeed: 0.15
+  dash_Cooldown: 0.25
+  dash_StartTime: 0
+  dash_Speed: 0.5
+  dashed: 0
+  dashing: 0
+  dashDistance: 4
+  dashIFrames: 0
+  dashDirection: {x: 0, y: 0, z: 0}
+  dashStart: {x: 0, y: 0, z: 0}
 --- !u!114 &1349618451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,10 +495,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349618447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 083e2aca311683a4296404d873f203f2, type: 3}
+  m_Script: {fileID: 11500000, guid: bdfff4c655abac84685eaac906a080ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  attackDuration: 0.1
+  attackCooldown: 1
+  attackTimer: 0
+  attackTimerDur: 0
+  meleeAttacking: 0
+  attacked: 0
+  attackTrigger: {fileID: 1289295201}
+  attackDirection: {x: 0, y: 0, z: 0}
+  attackAngle: 0
+  attackSpeed: 0
+  attackRotUp: 0
+  attackRotLow: 0
+  attackOffset: 30
+  projectile: {fileID: 470386, guid: 97c8d61ca5645b040a4192e75f7fffab, type: 2}
 --- !u!61 &1349618452
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -499,51 +526,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
---- !u!114 &1349618453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1349618447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb68c2b1d09c405438a85ed27cb9afbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1349618454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1349618447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98441222e74b2f48a89da7a710ebed7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingEnergy: 100
-  currentEnergy: 0
-  energySlider: {fileID: 0}
-  energyCD: 0.2
-  energyCDStart: 0
-  energyUsed: 0
-  movespeed: 0.1
-  dash_Cooldown: 0.1
-  dash_StartTime: 0
-  dash_Speed: 0.25
-  dashed: 0
-  dashing: 0
-  dashDistance: 4
-  dashIFrames: 0
-  dashDirection: {x: 0, y: 0, z: 0}
-  dashStart: {x: 0, y: 0, z: 0}
-  attackTrigger: {fileID: 1289295201}
-  attackDirection: {x: 0, y: 0, z: 0}
-  attackAngle: 0
-  attackSpeed: 100
-  attackRotUp: 0
-  attackRotLow: 0
-  attackOffset: 40
 --- !u!212 &1349618455
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -600,10 +582,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1827543895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631d7859833a6e242a4e50682bd4ba1a, type: 3}
+  m_Script: {fileID: 11500000, guid: ad4e6d51a13c210419bbec7b2446d58b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Key1
+  name: Key
   type: 0
 --- !u!212 &1827543897
 SpriteRenderer:
@@ -661,6 +643,46 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.21, y: 0.09}
+--- !u!1 &1851969847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1851969849}
+  - 114: {fileID: 1851969848}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1851969848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1851969847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a598eda6be96044995ea9fc3016041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 809504036}
+--- !u!4 &1851969849
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1851969847}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
 --- !u!1 &1873479437
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +779,6 @@ GameObject:
   - 4: {fileID: 1912426332}
   - 212: {fileID: 1912426331}
   - 61: {fileID: 1912426333}
-  - 114: {fileID: 1912426334}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -821,18 +842,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.18, y: 0.22}
---- !u!114 &1912426334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1912426330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92a4990c377306e40a3c9c867395124e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
 --- !u!1 &2017194231
 GameObject:
   m_ObjectHideFlags: 0
