@@ -2,9 +2,11 @@
 using System.Collections;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerAttack))]
 public class PlayerController : MonoBehaviour {
 	//---Player_Variables
 	private bool canMove;
+    public bool actionAvailable;
 	public int startingEnergy = 100;
 	public int currentEnergy;
 	public Slider energySlider;
@@ -22,29 +24,17 @@ public class PlayerController : MonoBehaviour {
 	public float dashIFrames; //invincible frames
 	public Vector3 dashDirection, dashStart;
 
-	//---Attack_Variables
-	public float attackDuration = 0.1F; //How long the attack will last
-	public float attackCooldown = 1F; //How long till the player can do another attack
-	private float attackTimer = 0F;     //Timer for Attack Cooldown
-	private float attackTimerDur = 0F;  //Timer for Attack Duration
-	private bool attacking = false;
-	private bool attacked;
-	public Collider2D attackTrigger;
-	public Vector3 attackDirection;
-    public float attackAngle, 
-        attackSpeed,
-        attackRotUp,
-        attackRotLow,
-        attackOffset = 30;
-
+    PlayerAttack pAttack;
 
     // Use this for initialization
     void Start () {
+        pAttack = this.GetComponent<PlayerAttack>();
 		currentEnergy = startingEnergy;
 		//energySlider.value = currentEnergy;
 		canMove = true;
-		attackTrigger.enabled = false;
-		attacked = false;
+        actionAvailable = true;
+		pAttack.attackTrigger.enabled = false;
+        pAttack.attacked = false;
 	}
 	
 	// Update is called once per frame
@@ -55,13 +45,14 @@ public class PlayerController : MonoBehaviour {
 		gainEnergy ();
 
 		Movement ();
-		Attack ();
-		if(dashing)
-			Dash ();
-		if (attacking)
-			Attacking ();
 
-	}
+        if (dashing)
+			Dash ();
+        
+        if (pAttack.meleeAttacking)
+            pAttack.MeleeDuration();
+
+    }
 	public void useEnergy(int amount)
 	{
 		currentEnergy -= amount;
@@ -80,7 +71,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Movement(){
-			if(canMove){
+		if(canMove){
 			if (Input.GetKey (KeyCode.A)) {
 				transform.Translate(new Vector3(-movespeed,0,0));
 			}
@@ -99,55 +90,21 @@ public class PlayerController : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.Space) && !dashed && !dashing) {
 				StartCoroutine (StartDash());
 			}
-		}
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !pAttack.meleeAttacking && Time.time > pAttack.attackTimer && Time.time > pAttack.attackTimerDur && !dashing)
+            {
+                pAttack.MeleeSetup();
+                actionAvailable = false;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1) && Time.time > pAttack.attackTimer && Time.time > pAttack.attackTimerDur && actionAvailable)
+            {
+                
+            }
+        }
 	}
 
-	public void Attack(){
-		if (Input.GetKeyDown (KeyCode.Mouse0) && !attacking && Time.time > attackTimer && Time.time > attackTimerDur && !dashing) {
-			attacking = true;
 
-			attackTrigger.enabled = true;
-
-            attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //Get the direction towards the mouse
-            attackDirection.z = transform.position.z;
-            attackDirection = attackDirection.normalized;
-
-            //Vector3 relativeDirection = attackTrigger.transform.InverseTransformDirection(attackDirection); //Convert the direction into the local space
-            //attackAngle = Mathf.Atan2(relativeDirection.y, relativeDirection.x) * Mathf.Rad2Deg;
-            attackAngle = Utility._util.RotateTowards(attackDirection, attackTrigger.transform);
-            /*if (attackDirection.x < 0)
-                attackAngle -= attackOffset;
-            else attackAngle += attackOffset;*/
-            attackRotLow = attackAngle - attackOffset / 2;
-            attackRotUp = attackAngle + attackOffset / 2;
-			//Debug.Log(string.Format("Controller angle:{0} and the angle from Utility: {1} \nattackDirection: {2} ", attackAngle, Utility._util.RotateTowards(attackDirection,attackTrigger.transform),relativeDirection));
-            attackTrigger.transform.Rotate(0, 0, attackAngle);
-            //Debug.DrawLine(attackTrigger.transform.position, attackDirection, Color.red, 2.0f);
-
-            if (attacking) {
-				Debug.Log ("Attacking = true");
-				attackTimerDur = Time.time + attackDuration;
-				attackTimer = Time.time + attackCooldown ;
-				attacked = true;
-			}
-		}
-		if(Time.time > attackTimerDur + attackDuration && attacked == true) {
-			//Debug.Log ("AttackTrigger = false");
-
-			attackTrigger.enabled = false;
-
-		}
-		if(Time.time > attackTimer + attackCooldown && attacked == true){
-            Debug.Log("Attacking = false");
-            attacked = false;
-			attacking = false;
-		}
-	}
-
-	private void Attacking(){
-        //attackTrigger.transform.rotation = Quaternion.RotateTowards(Quaternion.Euler(0, 0, attackRotUp), Quaternion.Euler(0, 0, attackRotLow), attackSpeed*Time.deltaTime);
-        //attackTrigger.transform.RotateAround (attackTrigger.transform.position, Vector3.forward, -attackSpeed*Time.deltaTime);
-    }
 
 	IEnumerator StartDash(){
 		dashed = true;
@@ -166,7 +123,7 @@ public class PlayerController : MonoBehaviour {
         if (Vector2.Distance(dashStart, transform.position) < dashDistance)
         {
             canMove = false;
-            attackTrigger.enabled = false;
+            pAttack.attackTrigger.enabled = false;
             transform.Translate(dashDirection.normalized * dash_Speed);
         } else
         {
