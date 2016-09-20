@@ -504,12 +504,14 @@ MonoBehaviour:
   attackTimerDur: 0
   meleeAttacking: 0
   attacked: 0
+  rangeAttacking: 0
   attackTrigger: {fileID: 1289295201}
   attackDirection: {x: 0, y: 0, z: 0}
   attackAngle: 0
   attackSpeed: 0
   attackRotUp: 0
   attackRotLow: 0
+  rangedCooldown: 0.5
   attackOffset: 30
   projectile: {fileID: 470386, guid: 97c8d61ca5645b040a4192e75f7fffab, type: 2}
 --- !u!61 &1349618452
@@ -667,10 +669,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1851969847}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91a598eda6be96044995ea9fc3016041, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad06c416a37a9e4f8a906eec978a5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 809504036}
+  canvas: {fileID: 0}
 --- !u!4 &1851969849
 Transform:
   m_ObjectHideFlags: 0
