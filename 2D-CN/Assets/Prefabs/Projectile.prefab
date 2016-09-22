@@ -9,10 +9,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 470386}
   - 212: {fileID: 21264462}
-  - 114: {fileID: 11434676}
-  m_Layer: 0
+  - 114: {fileID: 11475604}
+  - 61: {fileID: 6172700}
+  m_Layer: 8
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23,13 +24,27 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113818}
-  m_LocalRotation: {x: 0, y: 0, z: -0.84382683, w: 0.5366155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.3292314, y: -0.074886225, z: 0}
   m_LocalScale: {x: 0.5, y: 0.75, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11434676
+--- !u!61 &6172700
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113818}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.0000001}
+--- !u!114 &11475604
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -37,12 +52,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 113818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3997044083703af46bf355485a9fa5e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 152104d920b97ed428ae4d5b21f5a5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDir: {x: 0.9913547, y: 0.13120867, z: 0}
-  speed: 10
-  deathTimer: 5
+  moveDir: {x: 0.99339414, y: 0.11475235, z: 0}
+  speed: 0
+  damage: 0
+  deathTimer: 0
+  fireRate: 0.5
 --- !u!212 &21264462
 SpriteRenderer:
   m_ObjectHideFlags: 1

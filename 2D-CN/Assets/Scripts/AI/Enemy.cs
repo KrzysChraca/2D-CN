@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour, IDamagable {
 	public float health = 100;
 
 	// Use this for initialization
@@ -21,22 +22,26 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	public void recieveDamage(float damage){
-		health = health - damage;
-
-		Debug.Log (health);
-
-	}
-
 	public void OnTriggerEnter2D(Collider2D other){
+        Debug.Log("Collided with " + other.name);
 
 		if (other.gameObject.CompareTag ("Attack")) {
 
 			AttackTrigger dam = other.GetComponent<AttackTrigger>();
 
-			recieveDamage(dam.dmg);
-
+			RecieveDamage(other.GetComponent<AttackTrigger>().dmg);
 		}
 
+        if(other.CompareTag("Projectile"))
+        {
+            RecieveDamage(other.GetComponent<Projectile>().damage);
+        }
 	}
+
+    public void RecieveDamage(float dmg)
+    {
+        health = health - dmg;
+
+        Debug.Log(health);
+    }
 }

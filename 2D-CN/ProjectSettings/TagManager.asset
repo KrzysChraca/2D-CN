@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Player
   - Enemy
   - PickUp
   - Attack
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -17,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Projectile
+  - Player
   - 
   - 
   - 

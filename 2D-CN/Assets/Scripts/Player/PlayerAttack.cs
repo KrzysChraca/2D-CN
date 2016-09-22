@@ -74,12 +74,13 @@ public class PlayerAttack : MonoBehaviour {
         attackAngle = Utility._util.RotateTowards(attackDirection, attackTrigger.transform);
         attackTrigger.transform.Rotate(0, 0, attackAngle);
 
-        projectile.GetComponent<Projectile>().speed = 10;
         projectile.GetComponent<Projectile>().moveDir = attackDirection;
-        projectile.transform.Rotate(0, 0, attackAngle);
-        Instantiate(projectile, new Vector3(attackTrigger.transform.position.x, attackTrigger.transform.position.y, attackTrigger.transform.position.z), Quaternion.Euler(new Vector3(0,0, attackAngle)));
+
+        Instantiate(projectile,
+            new Vector3(attackTrigger.transform.position.x, attackTrigger.transform.position.y, attackTrigger.transform.position.z), 
+            Quaternion.Euler(new Vector3(0, 0, Utility._util.RotateTowards(attackDirection, projectile))));
+        rangedCooldown = projectile.GetComponent<Projectile>().fireRate;
         StartCoroutine(RangedCooldown());
-        
     }
 
     public IEnumerator RangedCooldown()
