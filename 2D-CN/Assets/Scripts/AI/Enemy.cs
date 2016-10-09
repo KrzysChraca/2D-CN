@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour, IDamagable {
 
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
@@ -27,15 +27,13 @@ public class Enemy : MonoBehaviour, IDamagable {
 
 		if (other.gameObject.CompareTag ("Attack")) {
 
-			AttackTrigger dam = other.GetComponent<AttackTrigger>();
-
 			RecieveDamage(other.GetComponent<AttackTrigger>().dmg);
 		}
 
-        if(other.CompareTag("Projectile"))
+       /* if(other.gameObject.CompareTag("Projectile"))
         {
             RecieveDamage(other.GetComponent<Projectile>().damage);
-        }
+        }*/
 	}
 
     public void RecieveDamage(float dmg)

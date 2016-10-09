@@ -25,7 +25,12 @@ public abstract class Projectile : MonoBehaviour {
         if (col.CompareTag("Enemy") || col.name == "Enemy")
         {
             Debug.Log("Hit an enemy " + col.name);
-            GetComponent<IDamagable>().RecieveDamage(damage);
+            col.GetComponent<IDamagable>().RecieveDamage(damage);
         }
     }
+
+	public virtual void OnTriggerExit()
+	{
+		
+	}
 }

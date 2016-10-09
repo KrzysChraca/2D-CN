@@ -9,7 +9,7 @@ public class DefaultBullet : Projectile {
     {
         damage = 5;
         deathTimer = 3;
-        speed = 10;
+        speed = 15;
         fireRate = 0.3f;
         StartCoroutine(DeathTimer());
     }

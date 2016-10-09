@@ -540,7 +540,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.25, y: 0.32}
 --- !u!212 &1349618455
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -666,7 +666,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1851969849}
-  - 114: {fileID: 1851969848}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -674,18 +673,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1851969848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1851969847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad06c416a37a9e4f8a906eec978a5ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
 --- !u!4 &1851969849
 Transform:
   m_ObjectHideFlags: 0
@@ -795,6 +782,7 @@ GameObject:
   - 212: {fileID: 1912426331}
   - 61: {fileID: 1912426333}
   - 114: {fileID: 1912426334}
+  - 50: {fileID: 1912426335}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -870,6 +858,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+--- !u!50 &1912426335
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1912426330}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2017194231
 GameObject:
   m_ObjectHideFlags: 0
