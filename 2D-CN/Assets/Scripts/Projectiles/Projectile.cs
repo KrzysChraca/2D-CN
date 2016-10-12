@@ -7,6 +7,7 @@ public abstract class Projectile : MonoBehaviour {
     public int speed,
             damage;
     public float deathTimer = 5,
+        attackDelay = 0,
         fireRate = 0.5f;
 
     public virtual void Start()
@@ -28,9 +29,4 @@ public abstract class Projectile : MonoBehaviour {
             col.GetComponent<IDamagable>().RecieveDamage(damage);
         }
     }
-
-	public virtual void OnTriggerExit()
-	{
-		
-	}
 }

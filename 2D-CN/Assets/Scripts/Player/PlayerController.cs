@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour {
 		//energySlider.value = currentEnergy;
 		canMove = true;
         actionAvailable = true;
-		pAttack.attackTrigger.enabled = false;
-        pAttack.attacked = false;
 	}
 	
 	// Update is called once per frame
@@ -124,7 +122,6 @@ public class PlayerController : MonoBehaviour {
         if (Vector2.Distance(dashStart, transform.position) < dashDistance)
         {
             canMove = false;
-            pAttack.attackTrigger.enabled = false;
             transform.Translate(dashDirection.normalized * dash_Speed);
         } else
         {
