@@ -805,7 +805,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d80b94fb43b5be4bb7985047ad5888e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterMenuCanvas: {fileID: 1948441992}
 --- !u!1 &907713823
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,7 +1511,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1289295200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f1c5277c4bd3a24e9d14c7ca339289b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3478ed34f3a7b044fb4316c059952a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 10
@@ -1589,10 +1588,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349618447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 083e2aca311683a4296404d873f203f2, type: 3}
+  m_Script: {fileID: 11500000, guid: bdfff4c655abac84685eaac906a080ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  attackDuration: 1
+  attackCooldown: .100000001
+  attackTimer: 0
+  attackTimerDur: 0
+  meleeAttacking: 0
+  attacked: 0
+  rangeAttacking: 0
+  attackTrigger: {fileID: 1289295201}
+  attackDirection: {x: 0, y: 0, z: 0}
+  attackAngle: 0
+  attackSpeed: 0
+  attackRotUp: 0
+  attackRotLow: 0
+  rangedCooldown: .5
+  attackOffset: 30
+  projectile: {fileID: 470386, guid: 97c8d61ca5645b040a4192e75f7fffab, type: 2}
 --- !u!61 &1349618452
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1616,9 +1630,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349618447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb68c2b1d09c405438a85ed27cb9afbf, type: 3}
+  m_Script: {fileID: 11500000, guid: afebbec55ccb36e4198e20ea1e153563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  items: []
 --- !u!114 &1349618454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,9 +1643,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349618447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98441222e74b2f48a89da7a710ebed7, type: 3}
+  m_Script: {fileID: 11500000, guid: ccc38362a7f3a7040b2deb42cd9a828b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionAvailable: 0
   startingEnergy: 100
   currentEnergy: 0
   energySlider: {fileID: 0}
@@ -1638,24 +1654,15 @@ MonoBehaviour:
   energyCDStart: 0
   energyUsed: 0
   movespeed: 1
-  dash_Cooldown: .25
+  dash_Cooldown: .5
   dash_StartTime: 0
-  dash_Speed: 5
+  dash_Speed: 2
   dashed: 0
   dashing: 0
-  dashDistance: 30
+  dashDistance: 25
   dashIFrames: 0
   dashDirection: {x: 0, y: 0, z: 0}
   dashStart: {x: 0, y: 0, z: 0}
-  attackDuration: .100000001
-  attackCooldown: .25
-  attackTrigger: {fileID: 1289295201}
-  attackDirection: {x: 0, y: 0, z: 0}
-  attackAngle: 0
-  attackSpeed: 5
-  attackRotUp: 0
-  attackRotLow: 0
-  attackOffset: 70
 --- !u!212 &1349618455
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1721,6 +1728,38 @@ Prefab:
     - target: {fileID: 415780, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11416878, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: attackTrigger
+      value: 
+      objectReference: {fileID: 1289295201}
+    - target: {fileID: 11416878, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 470386, guid: 97c8d61ca5645b040a4192e75f7fffab, type: 2}
+    - target: {fileID: 11476610, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: movespeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11476610, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: dash_Cooldown
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11476610, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: dashDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11476610, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: dash_Speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11416878, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: attackCooldown
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 11416878, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
+      propertyPath: attackDuration
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d017b93bb9ac364d99a557088a39e62, type: 2}
@@ -2264,8 +2303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631d7859833a6e242a4e50682bd4ba1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Key1
-  type: 0
 --- !u!212 &1827543897
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2549,7 +2586,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1912426330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92a4990c377306e40a3c9c867395124e, type: 3}
+  m_Script: {fileID: 11500000, guid: fca875ee9a3fe534cb09e60b5255e061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100

@@ -13,7 +13,7 @@ GameObject:
   - 61: {fileID: 6110216}
   m_Layer: 8
   m_Name: Proj2
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bb5c36a792ff948aff32b0230673ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDir: {x: .55136472, y: .834264278, z: 0}
+  moveDir: {x: .996666372, y: -.0815855116, z: 0}
   speed: 15
   damage: 500
   deathTimer: 5
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 54b9c595ae79b3348972186d196ff73c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b1f544c918e9664d9d2d7ad9bbb5350, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
@@ -95,7 +95,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 54b9c595ae79b3348972186d196ff73c,
+      objectReference: {fileID: 21300000, guid: 0b1f544c918e9664d9d2d7ad9bbb5350,
         type: 3}
     - target: {fileID: 0}
       propertyPath: speed
@@ -136,6 +136,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: moveDir.y
       value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Projectile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

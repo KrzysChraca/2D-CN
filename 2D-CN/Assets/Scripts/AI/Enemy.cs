@@ -30,10 +30,10 @@ public class Enemy : MonoBehaviour, IDamagable {
 			RecieveDamage(other.GetComponent<AttackTrigger>().dmg);
 		}
 
-       /* if(other.gameObject.CompareTag("Projectile"))
+        if(other.gameObject.CompareTag("Projectile"))
         {
             RecieveDamage(other.GetComponent<Projectile>().damage);
-        }*/
+        }
 	}
 
     public void RecieveDamage(float dmg)
