@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour {
     public float attackCooldown = 1F; //How long till the player can do another attack
     public float attackTimer = 0F;     //Timer for Attack Cooldown
     public float attackTimerDur = 0F;  //Timer for Attack Duration
-    public bool meleeAttacking = false,
+    public static bool meleeAttacking = false,
                 rangeAttacking = false;
     public Vector3 attackDirection;
     public float attackAngle,
@@ -44,42 +44,31 @@ public class PlayerAttack : MonoBehaviour {
 
     public void MeleeSetup()
     {
+        SetAttackDirection();
         meleeAttacking = true;
         meleeAttack.GetComponent<Collider2D>().enabled = true;
         meleeAttack.GetComponent<SpriteRenderer>().enabled = true;
 
-        SetAttackDirection();
-
         attackAngle = Utility._util.RotateTowards(attackDirection, meleeAttack.transform);
-        meleeAttack.transform.Rotate(new Vector3(0, 0, player.transform.position.z), attackAngle);
+        //meleeAttack.transform.Rotate(new Vector3(0, 0, player.transform.position.z), attackAngle);
+        meleeAttack.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle);
+        StartCoroutine(meleeAttack.GetComponent<Melee>().Attack());
+        StartCoroutine(MeleeCooldown());
         //Debug.Log(string.Format("Controller angle:{0} and the angle from Utility: {1} ", attackAngle, Utility._util.RotateTowards(attackDirection,attackTrigger.transform)));
-        //Debug.DrawLine(attackTrigger.transform.position, attackDirection, Color.red, 2.0f);
-        if (meleeAttacking)
-        {
-            Debug.Log("Attacking = true");
-            meleeAttack.GetComponent<Melee>().attackTimerDur = Time.time + attackDuration;
-            meleeAttack.GetComponent<Melee>().attackTimer = Time.time + attackCooldown;
-        }
+        Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);
     }
 
-    public void MeleeDuration()
+    public IEnumerator MeleeCooldown()
     {
-        if (Time.time > attackTimer + attackCooldown && meleeAttacking == true)
-        {
-            meleeAttack.GetComponent<Melee>().weaponTrigger.enabled = false;
-            Debug.Log("Attacking = false");
-            meleeAttacking = false;
-            player.actionAvailable = true;
-        }
+        yield return new WaitForSeconds(meleeAttack.GetComponent<Melee>().attackCooldown);
+        player.actionAvailable = true;
     }
-    
+
     public void RangedSetup()
     {
         SetAttackDirection();
         attackAngle = Utility._util.RotateTowards(attackDirection, projIndicator.transform);
-        projIndicator.transform.Rotate(0,0, attackAngle); //TODO make sure the indicator rotates around the player
-        //Debug.Log("The attack angle for the porjectile indicicator: " + attackAngle);
-
+        projIndicator.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle); //TODO make sure the indicator rotates around the player
         projectile.GetComponent<Projectile>().moveDir = attackDirection;
 
         Instantiate(projectile,

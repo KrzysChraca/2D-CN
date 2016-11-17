@@ -60,8 +60,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDuration: 0.1
   attackCooldown: 1
-  attackTimer: 3.544436
-  attackTimerDur: 2.644436
+  attackTimer: 2.1840515
+  attackTimerDur: 1.2840517
+  attackDmg: 1
   attacking: 0
   weaponTrigger: {fileID: 0}
   attackDirection: {x: 0, y: 0, z: 0}

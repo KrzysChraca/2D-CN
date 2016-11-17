@@ -94,11 +94,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 412648, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.282
+      value: -0.005
       objectReference: {fileID: 0}
     - target: {fileID: 412648, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.024
+      value: 0.361
       objectReference: {fileID: 0}
     - target: {fileID: 412648, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
       propertyPath: m_LocalPosition.z
@@ -114,16 +114,24 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 412648, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 412648, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 412648, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6034798, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11495332, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
+      propertyPath: weaponTrigger
+      value: 
+      objectReference: {fileID: 670850521}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
   m_IsPrefabParent: 0
@@ -259,6 +267,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2017194232}
   m_RootOrder: 0
+--- !u!60 &670850521 stripped
+PolygonCollider2D:
+  m_PrefabParentObject: {fileID: 6034798, guid: a289e9ed32b056a49adacd595bd6c451,
+    type: 2}
+  m_PrefabInternal: {fileID: 164117468}
 --- !u!1 &809504032
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +430,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 435120, guid: 068f806cbd9595642a29802c5d2730e0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.25
+      value: 0.292
       objectReference: {fileID: 0}
     - target: {fileID: 435120, guid: 068f806cbd9595642a29802c5d2730e0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -447,6 +460,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 435120, guid: 068f806cbd9595642a29802c5d2730e0, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 435120, guid: 068f806cbd9595642a29802c5d2730e0, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 435120, guid: 068f806cbd9595642a29802c5d2730e0, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 068f806cbd9595642a29802c5d2730e0, type: 2}
   m_IsPrefabParent: 0
@@ -470,7 +495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1289295201
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -609,8 +634,6 @@ MonoBehaviour:
   attackCooldown: 1
   attackTimer: 0
   attackTimerDur: 0
-  meleeAttacking: 0
-  rangeAttacking: 0
   attackDirection: {x: 0, y: 0, z: 0}
   attackAngle: 0
   attackSpeed: 0
@@ -619,7 +642,7 @@ MonoBehaviour:
   rangedCooldown: 0.5
   projectile: {fileID: 470386, guid: 97c8d61ca5645b040a4192e75f7fffab, type: 2}
   projIndicator: {fileID: 1029523992}
-  meleeAttack: {fileID: 412648, guid: a289e9ed32b056a49adacd595bd6c451, type: 2}
+  meleeAttack: {fileID: 1312987559}
 --- !u!61 &1349618452
 BoxCollider2D:
   m_ObjectHideFlags: 0

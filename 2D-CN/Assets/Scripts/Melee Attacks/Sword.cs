@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
+using System.Collections;
 
 
 public class Sword : Melee{
     public override void Awake()
     {
-        attackDuration = 0.1F; //How long the attack will last
-        attackCooldown = 1F; //How long till the player can do another attack
-        attackTimer = 0F;     //Timer for Attack Cooldown
-        attackTimerDur = 0F;
+        attackDuration = 0.6F; //How long the attack will last
+        attackCooldown = 0.5F; //How long till the player can do another attack
         attackDmg = 10f;
         base.Awake();
     }
@@ -18,11 +16,19 @@ public class Sword : Melee{
         base.Start();
         weaponTrigger.enabled = false;
         weaponTrigger.GetComponent<SpriteRenderer>().enabled = false;
+        //Debug.Log(string.Format("The sword trigger is {0}", weaponTrigger.name));
     }
 
-    public override void Attack()
+    public override IEnumerator Attack()
     {
         weaponTrigger.enabled = true;
+        Debug.Log("Attacking");
+        yield return new WaitForSeconds(attackDuration);
+        attacking = false;
+        weaponTrigger.GetComponent<SpriteRenderer>().enabled = false;
+        weaponTrigger.enabled = false;
+        Debug.Log("Attack Finished");
+        PlayerAttack.meleeAttacking = false;
     }
 
     void Update()

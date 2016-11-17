@@ -25,10 +25,10 @@ public class Enemy : MonoBehaviour, IDamagable {
 	public void OnTriggerEnter2D(Collider2D other){
         Debug.Log("Collided with " + other.name);
 
-		if (other.gameObject.CompareTag ("Attack")) {
+		//if (other.gameObject.CompareTag ("Attack")) {
 
-			RecieveDamage(other.GetComponent<AttackTrigger>().dmg);
-		}
+		//	RecieveDamage(other.GetComponent<AttackTrigger>().dmg);
+		//}
 
        /* if(other.gameObject.CompareTag("Projectile"))
         {
