@@ -4,15 +4,10 @@ using System.Collections;
 public class Utility : MonoBehaviour {
 
     public static readonly Utility _util = new Utility();
-
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
     public float RotateTowards(Vector3 targetDir, Transform start)
     {
+
         targetDir.z = start.transform.position.z;
         targetDir = targetDir.normalized;
 
@@ -21,5 +16,4 @@ public class Utility : MonoBehaviour {
 
         return rotAngle;
     }
-
 }

@@ -19,20 +19,13 @@ public class Sword : Melee{
         //Debug.Log(string.Format("The sword trigger is {0}", weaponTrigger.name));
     }
 
-    public override IEnumerator Attack()
+    public override IEnumerator Attack(Vector3 atkDir)
     {
         weaponTrigger.enabled = true;
-        Debug.Log("Attacking");
         yield return new WaitForSeconds(attackDuration);
-        attacking = false;
+        attacking = false;    
         weaponTrigger.GetComponent<SpriteRenderer>().enabled = false;
         weaponTrigger.enabled = false;
-        Debug.Log("Attack Finished");
         PlayerAttack.meleeAttacking = false;
-    }
-
-    void Update()
-    {
-
     }
 }

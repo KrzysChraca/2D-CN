@@ -8,7 +8,6 @@ public abstract class Melee : MonoBehaviour {
         attackDmg = 1f;
     public bool attacking;
     public Collider2D weaponTrigger;
-    public Vector3 attackDirection;
 
     public virtual void Awake()
     {
@@ -22,9 +21,9 @@ public abstract class Melee : MonoBehaviour {
         else weaponTrigger = gameObject.AddComponent<PolygonCollider2D>();
     }
 
-    public virtual IEnumerator Attack()
+    public virtual IEnumerator Attack(Vector3 atkDir)
     {
-        Debug.Log("Attack called");
+        Debug.Log("Attacking in this direction " + atkDir);
         yield return new WaitForSeconds(attackDuration);
         attacking = false;
         weaponTrigger.enabled = false;

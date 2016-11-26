@@ -3,10 +3,6 @@ using System.Collections;
 
 public class PlayerAttack : MonoBehaviour {
 
-    public float attackDuration = 0.1F; //How long the attack will last
-    public float attackCooldown = 1F; //How long till the player can do another attack
-    public float attackTimer = 0F;     //Timer for Attack Cooldown
-    public float attackTimerDur = 0F;  //Timer for Attack Duration
     public static bool meleeAttacking = false,
                 rangeAttacking = false;
     public Vector3 attackDirection;
@@ -45,16 +41,17 @@ public class PlayerAttack : MonoBehaviour {
     public void MeleeSetup()
     {
         SetAttackDirection();
+		
         meleeAttacking = true;
         meleeAttack.GetComponent<Collider2D>().enabled = true;
         meleeAttack.GetComponent<SpriteRenderer>().enabled = true;
 
         attackAngle = Utility._util.RotateTowards(attackDirection, meleeAttack.transform);
-        //meleeAttack.transform.Rotate(new Vector3(0, 0, player.transform.position.z), attackAngle);
-        meleeAttack.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle);
-        StartCoroutine(meleeAttack.GetComponent<Melee>().Attack());
+        meleeAttack.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle - 90);
+        //meleeAttack.transform.rotation *= Quaternion.Euler(0,0,-90);
+        StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
         StartCoroutine(MeleeCooldown());
-        //Debug.Log(string.Format("Controller angle:{0} and the angle from Utility: {1} ", attackAngle, Utility._util.RotateTowards(attackDirection,attackTrigger.transform)));
+
         Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);
     }
 
@@ -68,7 +65,7 @@ public class PlayerAttack : MonoBehaviour {
     {
         SetAttackDirection();
         attackAngle = Utility._util.RotateTowards(attackDirection, projIndicator.transform);
-        projIndicator.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle); //TODO make sure the indicator rotates around the player
+        projIndicator.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle); 
         projectile.GetComponent<Projectile>().moveDir = attackDirection;
 
         Instantiate(projectile,

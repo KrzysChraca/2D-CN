@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 		//energySlider.value = currentEnergy;
 
 		gainEnergy ();
@@ -46,10 +45,6 @@ public class PlayerController : MonoBehaviour {
 
         if (dashing)
 			Dash ();
-        
-        //if (PlayerAttack.meleeAttacking)
-        //    pAttack.MeleeDuration();            
-
     }
 	public void useEnergy(int amount)
 	{
@@ -102,8 +97,6 @@ public class PlayerController : MonoBehaviour {
             }
         }
 	}
-
-
 
 	IEnumerator StartDash(){
 		dashed = true;
@@ -163,13 +156,10 @@ public class PlayerController : MonoBehaviour {
 		}
 	}*/
 
-
     //for locating where player is
     private static Location location;
     public static Location GetLocation
     {
         get { return location; }
     }
-
-
 }
