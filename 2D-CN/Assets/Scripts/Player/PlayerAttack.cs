@@ -52,7 +52,7 @@ public class PlayerAttack : MonoBehaviour {
         StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
         StartCoroutine(MeleeCooldown());
 
-        //Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);
+        Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);
     }
 
     public IEnumerator MeleeCooldown()

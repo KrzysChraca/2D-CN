@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 470386}
   - 114: {fileID: 11475604}
   - 61: {fileID: 6172700}
-  - 212: {fileID: 21229684}
+  - 212: {fileID: 21282808}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Projectile
@@ -25,8 +25,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.4660223, y: 0.15520382, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.5, z: 1}
+  m_LocalPosition: {x: 5.80999994, y: -.100000001, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -37,13 +37,12 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113818}
   m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: .100000001, y: .100000001}
 --- !u!114 &11475604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -55,13 +54,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152104d920b97ed428ae4d5b21f5a5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDir: {x: 0.99583066, y: 0.0912212, z: 0}
+  moveDir: {x: .999093235, y: .0425749496, z: 0}
   speed: 0
   damage: 0
   deathTimer: 0
-  attackDelay: 0
-  fireRate: 0.5
---- !u!212 &21229684
+  fireRate: .5
+--- !u!212 &21282808
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -79,18 +77,14 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ce542526aa6eb0c458ada8b7bb968960, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b1f544c918e9664d9d2d7ad9bbb5350, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
