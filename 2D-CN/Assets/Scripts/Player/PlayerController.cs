@@ -33,13 +33,10 @@ public class PlayerController : MonoBehaviour {
 		//energySlider.value = currentEnergy;
 		canMove = true;
         actionAvailable = true;
-		pAttack.attackTrigger.enabled = false;
-        pAttack.attacked = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
 		//energySlider.value = currentEnergy;
 
 		gainEnergy ();
@@ -48,10 +45,6 @@ public class PlayerController : MonoBehaviour {
 
         if (dashing)
 			Dash ();
-        
-        if (pAttack.meleeAttacking)
-            pAttack.MeleeDuration();            
-
     }
 	public void useEnergy(int amount)
 	{
@@ -91,25 +84,23 @@ public class PlayerController : MonoBehaviour {
 				StartCoroutine (StartDash());
 			}
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !pAttack.meleeAttacking && Time.time > pAttack.attackTimer && Time.time > pAttack.attackTimerDur && !dashing)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !PlayerAttack.meleeAttacking  && actionAvailable)
             {
-                pAttack.MeleeSetup();
                 actionAvailable = false;
+                pAttack.MeleeSetup();   
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse1) && Time.time > pAttack.attackTimer && Time.time > pAttack.attackTimerDur && actionAvailable)
+            if (Input.GetKeyDown(KeyCode.Mouse1) && actionAvailable)
             {
-                pAttack.RangedSetup();
                 actionAvailable = false;
+                pAttack.RangedSetup();
             }
         }
 	}
 
-
-
 	IEnumerator StartDash(){
 		dashed = true;
-
+        actionAvailable = false;
 		dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 		dashDirection.z = 0;
         dashStart = transform.position;
@@ -117,6 +108,7 @@ public class PlayerController : MonoBehaviour {
 			
 		yield return new WaitForSeconds (dash_Cooldown);
 		dashed = false;
+        actionAvailable = true;
 	}
 
 	public void Dash()
@@ -124,7 +116,6 @@ public class PlayerController : MonoBehaviour {
         if (Vector2.Distance(dashStart, transform.position) < dashDistance)
         {
             canMove = false;
-            pAttack.attackTrigger.enabled = false;
             transform.Translate(dashDirection.normalized * dash_Speed);
         } else
         {
@@ -165,13 +156,10 @@ public class PlayerController : MonoBehaviour {
 		}
 	}*/
 
-
     //for locating where player is
     private static Location location;
     public static Location GetLocation
     {
         get { return location; }
     }
-
-
 }
