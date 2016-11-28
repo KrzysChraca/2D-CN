@@ -18,7 +18,11 @@ public abstract class Melee : MonoBehaviour {
     {
         if (gameObject.GetComponent<Collider2D>())
             weaponTrigger = this.gameObject.GetComponent<Collider2D>();
-        else weaponTrigger = gameObject.AddComponent<PolygonCollider2D>();
+        else
+        {
+            Debug.Log(string.Format("Missing collider for: {0}", gameObject.name));
+            weaponTrigger = gameObject.AddComponent<PolygonCollider2D>();
+        }
     }
 
     public virtual IEnumerator Attack(Vector3 atkDir)

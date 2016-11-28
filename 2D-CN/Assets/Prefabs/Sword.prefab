@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 412648}
   - 212: {fileID: 21202540}
   - 114: {fileID: 11495332}
-  - 60: {fileID: 6034798}
+  - 61: {fileID: 61000010254226492}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Attack
@@ -24,30 +24,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 112270}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.007, y: 0.319, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.015000001, y: 0.29999998, z: 0}
   m_LocalScale: {x: 0.07, y: 0.5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!60 &6034798
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 112270}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -0.43301272, y: -0.24999994}
-      - {x: 0.43301272, y: -0.25000003}
-      - {x: 0, y: 0.5}
 --- !u!114 &11495332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -64,7 +47,6 @@ MonoBehaviour:
   attackDmg: 1
   attacking: 0
   weaponTrigger: {fileID: 0}
-  attackDirection: {x: 0, y: 0, z: 0}
 --- !u!212 &21202540
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -109,3 +91,17 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 112270}
   m_IsPrefabParent: 1
+--- !u!61 &61000010254226492
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112270}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0.1}
+  serializedVersion: 2
+  m_Size: {x: 0.65, y: 0.8}

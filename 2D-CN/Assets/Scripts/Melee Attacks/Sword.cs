@@ -22,6 +22,7 @@ public class Sword : Melee{
     public override IEnumerator Attack(Vector3 atkDir)
     {
         weaponTrigger.enabled = true;
+        weaponTrigger.GetComponent<SpriteRenderer>().enabled = true;
         yield return new WaitForSeconds(attackDuration);
         attacking = false;    
         weaponTrigger.GetComponent<SpriteRenderer>().enabled = false;

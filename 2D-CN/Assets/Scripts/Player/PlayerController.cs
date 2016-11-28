@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        pAttack = this.GetComponent<PlayerAttack>();
+        pAttack = gameObject.GetComponent<PlayerAttack>();
 		currentEnergy = startingEnergy;
 		//energySlider.value = currentEnergy;
 		canMove = true;
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour {
 				StartCoroutine (StartDash());
 			}
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !PlayerAttack.meleeAttacking  && actionAvailable)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && actionAvailable)
             {
                 actionAvailable = false;
                 pAttack.MeleeSetup();   

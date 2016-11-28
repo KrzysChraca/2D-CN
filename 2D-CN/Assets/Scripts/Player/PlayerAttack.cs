@@ -6,11 +6,7 @@ public class PlayerAttack : MonoBehaviour {
     public static bool meleeAttacking = false,
                 rangeAttacking = false;
     public Vector3 attackDirection;
-    public float attackAngle,
-        attackSpeed,
-        attackRotUp,
-        attackRotLow,
-        rangedCooldown = 0.5f;
+    public float attackAngle;
     private PlayerController player;
     public Transform projectile,
                     projIndicator,
@@ -41,18 +37,14 @@ public class PlayerAttack : MonoBehaviour {
     public void MeleeSetup()
     {
         SetAttackDirection();
-		
+        Debug.Log("Started the Melee attack ");
         meleeAttacking = true;
-        meleeAttack.GetComponent<Collider2D>().enabled = true;
-        meleeAttack.GetComponent<SpriteRenderer>().enabled = true;
-
         attackAngle = Utility._util.RotateTowards(attackDirection, meleeAttack.transform);
         meleeAttack.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle - 90);
-        //meleeAttack.transform.rotation *= Quaternion.Euler(0,0,-90);
         StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
         StartCoroutine(MeleeCooldown());
 
-        Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);
+        //Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);
     }
 
     public IEnumerator MeleeCooldown()
@@ -64,18 +56,17 @@ public class PlayerAttack : MonoBehaviour {
     public void RangedSetup()
     {
         SetAttackDirection();
-        attackAngle = Utility._util.RotateTowards(attackDirection, projIndicator.transform);
-        projIndicator.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle); 
+        //attackAngle = Utility._util.RotateTowards(attackDirection, projIndicator.transform);
+        //projIndicator.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle); 
         projectile.GetComponent<Projectile>().moveDir = attackDirection;
 
         Instantiate(projectile,
-            new Vector3(projIndicator.transform.position.x, projIndicator.transform.position.y, projIndicator.transform.position.z), 
-            Quaternion.Euler(new Vector3(0, 0, Utility._util.RotateTowards(attackDirection, projectile))));
-        rangedCooldown = projectile.GetComponent<Projectile>().fireRate;
-        StartCoroutine(RangedCooldown());
+            player.transform.position, 
+            Quaternion.Euler(new Vector3(0, 0, Utility._util.RotateTowards(attackDirection, projectile))));        
+        StartCoroutine(RangedCooldown(projectile.GetComponent<Projectile>().fireRate));
     }
 
-    public IEnumerator RangedCooldown()
+    public IEnumerator RangedCooldown(float rangedCooldown)
     {
         yield return new WaitForSeconds(rangedCooldown);
         player.actionAvailable = true;
