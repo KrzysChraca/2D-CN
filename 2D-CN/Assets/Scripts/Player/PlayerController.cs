@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 	public float dash_Cooldown = .25F;
 	public float dash_StartTime = 0F;
 	public float  dash_Speed = 0.5F;
-	public bool dashed, dashing;
+	public bool dashing;
 	public float dashDistance = 4F;
 	public float dashIFrames; //invincible frames
 	public Vector3 dashDirection, dashStart;
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour {
 			if (Input.GetKey (KeyCode.S)) {
 				transform.Translate(new Vector3(0,-movespeed,0));
 			}
-			if (Input.GetKeyDown (KeyCode.Space) && !dashed && !dashing) {
+			if (Input.GetKeyDown (KeyCode.Space) && !dashing) {
 				StartCoroutine (StartDash());
 			}
 
@@ -99,7 +99,6 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator StartDash(){
-		dashed = true;
         actionAvailable = false;
 		dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 		dashDirection.z = 0;
@@ -107,7 +106,6 @@ public class PlayerController : MonoBehaviour {
 		dashing = true;
 			
 		yield return new WaitForSeconds (dash_Cooldown);
-		dashed = false;
         actionAvailable = true;
 	}
 
@@ -123,38 +121,6 @@ public class PlayerController : MonoBehaviour {
             canMove = true;
         }
     }
-
-    /*public void Dash(){
-		if (Input.GetKeyDown (KeyCode.Space) && Time.time > dash_StartTime) {
-			
-			if(energyUsed <= currentEnergy){
-				dashed = true;
-				canMove = false;
-			
-				movespeed += dash_Speed;
-				var targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				targetPos.z = transform.position.z;
-				transform.position = Vector3.Lerp(transform.position, targetPos, dash_Speed);
-
-
-				dash_StartTime = Time.time + dash_Cooldown;
-				
-				Debug.Log("Dashing");
-				
-				energyUsed = 20;
-				//useEnergy(energyUsed);
-
-			;
-
-			}
-		}
-		if (Time.time > dash_StartTime + .1F && dashed == true) {
-			movespeed -= dash_Speed;
-			Debug.Log ("Cooldown");
-			dashed = false;
-			canMove = true;
-		}
-	}*/
 
     //for locating where player is
     private static Location location;
