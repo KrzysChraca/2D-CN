@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour {
                 rangeAttacking = false;
     public Vector3 attackDirection;
     public float attackAngle;
+    public int rangedCost, meleeCost;
     private PlayerController player;
     public Transform projectile,
                     projIndicator,

@@ -1,58 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Rewired;
 
 public class InputManager : MonoBehaviour {
-    public bool moveLeft, moveRight, moveUp, moveDown,
-        dashPressed, meleePressed, rangedPressed;
+    public int playerID;
+    public bool  dashPressed, meleePressed, rangedPressed;
+
+    public Vector3 moveVector;
+    Player rePlayer;
 
     void Start()
     {
-        moveDown = moveLeft = moveRight = moveUp = false;
+        playerID = 0;
+        rePlayer = ReInput.players.GetPlayer(playerID);
         dashPressed = meleePressed = rangedPressed = false;
     }
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveLeft = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.A)) moveLeft = false;
+        moveVector.x = rePlayer.GetAxisRaw("Horizontal");
+        moveVector.y = rePlayer.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveRight = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.D)) moveRight = false;
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            moveUp = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.W)) moveUp = false;
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveDown = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.S)) moveDown = false;
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        if (rePlayer.GetButtonDown(2)) //Dash Button pressed
             dashPressed = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.Space)) dashPressed = false;
+        else dashPressed = false;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
+        if (rePlayer.GetButtonDown(3)) //Melee Button pressed
             meleePressed = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.Mouse0)) meleePressed = false;
+        else meleePressed = false;
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
+        if (rePlayer.GetButton(4)) //Ranged Button pressed
             rangedPressed = true;
-        }
-        else if (Input.GetKeyUp(KeyCode.Mouse1)) rangedPressed = false;
+        else rangedPressed = false;
     }
 }

@@ -3,20 +3,20 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerAttack))]
+[RequireComponent(typeof(InputManager))]
 public class PlayerController : MonoBehaviour {
 	//---Player_Variables
 	private bool canMove;
-    public bool actionAvailable;
+    public bool actionAvailable, energyRegain;
 	public int startingEnergy = 100;
-	public int currentEnergy;
-	public Slider energySlider;
-	public float energyCD = 0.2F;
+	public int currentEnergy, energyUsed, energyGainRate, energyMax;
+    public Slider energySlider;
+	public float energyCD = 2.5F;
 	public float energyCDStart = 0;
-	public int energyUsed;
 	public float movespeed = 0.15F;
 
 	//---Dash_Variables
-	public float dash_Cooldown = .25F;
+	public float dash_Cooldown = 0.85F;
 	public float dash_StartTime = 0F;
 	public float  dash_Speed = 0.5F;
 	public bool dashing;
@@ -25,72 +25,80 @@ public class PlayerController : MonoBehaviour {
 	public Vector3 dashDirection, dashStart;
 
     PlayerAttack pAttack;
+    InputManager inputMan;
 
     // Use this for initialization
     void Start () {
+        energyMax = startingEnergy;
+        energyRegain = false;
+        energyGainRate = 1;
+        inputMan = gameObject.GetComponent<InputManager>();
         pAttack = gameObject.GetComponent<PlayerAttack>();
 		currentEnergy = startingEnergy;
 		//energySlider.value = currentEnergy;
 		canMove = true;
         actionAvailable = true;
-	}
+        GameManager.GetInstance.enAmount = currentEnergy;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		//energySlider.value = currentEnergy;
-
-		gainEnergy ();
-
-		Movement ();
-
-        if (dashing)
-			Dash ();
+        //energySlider.value = currentEnergy;
     }
+
+    void FixedUpdate()
+    {
+        Movement();
+        if (currentEnergy < energyMax && !energyRegain)
+            StartCoroutine(EnergyRepletion());
+        if (dashing)
+            Dash();
+    }
+
+    public IEnumerator EnergyRepletion()
+    {
+        energyRegain = true;
+        Debug.Log("Energy Replation ");
+        yield return new WaitForSeconds(energyCD);
+        if (currentEnergy != energyMax)
+        {
+            Debug.Log("Adding energy ");
+            currentEnergy += energyGainRate;
+            energyRegain = true;
+            GameManager.GetInstance.enAmount = currentEnergy;
+        }
+        
+        energyRegain = false;
+    }
+
 	public void useEnergy(int amount)
 	{
 		currentEnergy -= amount;
-		Debug.Log (amount + "minus" + currentEnergy);
-	}
+        GameManager.GetInstance.enAmount = currentEnergy;
+    }
 
-	public void gainEnergy(){
-		if(currentEnergy != 100)
-		{
-			if(Time.time > energyCDStart) {
-				energyCDStart = Time.time + energyCD;
-				currentEnergy += 10;
-				Debug.Log ("add 10 energy");
-			}
-		}
-	}
+	public void gainEnergy(int amount){
+        currentEnergy += amount;
+        GameManager.GetInstance.enAmount = currentEnergy;
+    }
 
 	public void Movement(){
 		if(canMove){
-			if (Input.GetKey (KeyCode.A)) {
-				transform.Translate(new Vector3(-movespeed,0,0));
-			}
-			
-			if (Input.GetKey (KeyCode.D)) {
-				transform.Translate(new Vector3(movespeed,0,0));
-			}
-			
-			if (Input.GetKey (KeyCode.W)) {
-				transform.Translate(new Vector3(0,movespeed,0));
-			}
-			
-			if (Input.GetKey (KeyCode.S)) {
-				transform.Translate(new Vector3(0,-movespeed,0));
-			}
-			if (Input.GetKeyDown (KeyCode.Space) && !dashing) {
-				StartCoroutine (StartDash());
-			}
+            if(inputMan.moveVector.x != 0 || inputMan.moveVector.y != 0)
+                transform.Translate(inputMan.moveVector*movespeed);
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && actionAvailable)
+            if (inputMan.dashPressed && !dashing)
             {
-                actionAvailable = false;
-                pAttack.MeleeSetup();   
+                StartCoroutine(StartDash());
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse1) && actionAvailable)
+            if (inputMan.meleePressed && actionAvailable)
+            {
+                actionAvailable = false;
+                pAttack.MeleeSetup();
+            }
+
+            if (inputMan.rangedPressed && actionAvailable)
             {
                 actionAvailable = false;
                 pAttack.RangedSetup();
@@ -99,15 +107,22 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator StartDash(){
-        actionAvailable = false;
-		dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-		dashDirection.z = 0;
-        dashStart = transform.position;
-		dashing = true;
-			
-		yield return new WaitForSeconds (dash_Cooldown);
+        if (currentEnergy - 10 > 0)
+        {
+            actionAvailable = false;
+            dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            dashDirection.z = 0;
+            dashStart = transform.position;
+            dashing = true;
+            useEnergy(10);
+            yield return new WaitForSeconds(dash_Cooldown);
+        }
+            
+        else Debug.Log("Not enough energy to dash");
+        yield return new WaitForSeconds(dash_Cooldown/2);
         actionAvailable = true;
-	}
+        
+    }
 
 	public void Dash()
     {
