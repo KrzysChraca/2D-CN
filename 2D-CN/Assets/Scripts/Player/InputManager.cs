@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour {
     public int playerID;
     public bool  dashPressed, meleePressed, rangedPressed;
 
-    public Vector3 moveVector;
+    public Vector3 moveVector, controllerAttackDirection;
     Player rePlayer;
 
     void Start()
@@ -14,12 +14,15 @@ public class InputManager : MonoBehaviour {
         playerID = 0;
         rePlayer = ReInput.players.GetPlayer(playerID);
         dashPressed = meleePressed = rangedPressed = false;
+        controllerAttackDirection = new Vector3();
     }
 
     void Update()
     {
         moveVector.x = rePlayer.GetAxisRaw("Horizontal");
         moveVector.y = rePlayer.GetAxisRaw("Vertical");
+
+        controllerAttackDirection = new Vector2(rePlayer.GetAxisRaw("Target Horizontal"), rePlayer.GetAxisRaw("Target Vertical"));
 
         if (rePlayer.GetButtonDown(2)) //Dash Button pressed
             dashPressed = true;

@@ -5,7 +5,7 @@ public class PlayerAttack : MonoBehaviour {
 
     public static bool meleeAttacking = false,
                 rangeAttacking = false;
-    public Vector3 attackDirection;
+    public Vector3 attackDirection, controllerDirection;
     public float attackAngle;
     public int rangedCost, meleeCost;
     private PlayerController player;
@@ -20,7 +20,9 @@ public class PlayerAttack : MonoBehaviour {
 
     private void SetAttackDirection()
     {
-        attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //Get the direction towards the mouse
+        if (controllerDirection.x != 0 || controllerDirection.y != 0)
+            attackDirection = controllerDirection;
+        else attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //Get the direction towards the mouse
         attackDirection.z = transform.position.z;
         attackDirection = attackDirection.normalized;
     }
@@ -57,8 +59,6 @@ public class PlayerAttack : MonoBehaviour {
     public void RangedSetup()
     {
         SetAttackDirection();
-        //attackAngle = Utility._util.RotateTowards(attackDirection, projIndicator.transform);
-        //projIndicator.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle); 
         projectile.GetComponent<Projectile>().moveDir = attackDirection;
 
         Instantiate(projectile,

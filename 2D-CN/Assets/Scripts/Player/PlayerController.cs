@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour {
     PlayerAttack pAttack;
     InputManager inputMan;
 
-    // Use this for initialization
     void Start () {
         energyMax = startingEnergy;
         energyRegain = false;
@@ -40,8 +39,7 @@ public class PlayerController : MonoBehaviour {
         actionAvailable = true;
         GameManager.GetInstance.enAmount = currentEnergy;
     }
-	
-	// Update is called once per frame
+
 	void Update () {
         //energySlider.value = currentEnergy;
     }
@@ -67,7 +65,6 @@ public class PlayerController : MonoBehaviour {
             energyRegain = true;
             GameManager.GetInstance.enAmount = currentEnergy;
         }
-        
         energyRegain = false;
     }
 
@@ -95,12 +92,14 @@ public class PlayerController : MonoBehaviour {
             if (inputMan.meleePressed && actionAvailable)
             {
                 actionAvailable = false;
+                pAttack.controllerDirection = inputMan.controllerAttackDirection;
                 pAttack.MeleeSetup();
             }
 
             if (inputMan.rangedPressed && actionAvailable)
             {
                 actionAvailable = false;
+                pAttack.controllerDirection = inputMan.controllerAttackDirection;
                 pAttack.RangedSetup();
             }
         }
@@ -110,7 +109,9 @@ public class PlayerController : MonoBehaviour {
         if (currentEnergy - 10 > 0)
         {
             actionAvailable = false;
-            dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            if (inputMan.controllerAttackDirection.x != 0 || inputMan.controllerAttackDirection.y != 0)
+                dashDirection = inputMan.controllerAttackDirection;
+            else dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             dashDirection.z = 0;
             dashStart = transform.position;
             dashing = true;
@@ -121,7 +122,6 @@ public class PlayerController : MonoBehaviour {
         else Debug.Log("Not enough energy to dash");
         yield return new WaitForSeconds(dash_Cooldown/2);
         actionAvailable = true;
-        
     }
 
 	public void Dash()
