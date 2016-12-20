@@ -13,7 +13,7 @@ public class ObjectScript : MonoBehaviour {
 	[HideInInspector]
 	public Quaternion rotationCalc;
 	[HideInInspector]
-	public NavMeshAgent navAgentRef;
+	public UnityEngine.AI.NavMeshAgent navAgentRef;
 
 	public int level = 1;
 	public int maxLeve = 100;

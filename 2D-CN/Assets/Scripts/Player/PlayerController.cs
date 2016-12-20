@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 	private bool canMove;
     public bool actionAvailable, energyRegain;
 	public int startingEnergy = 100;
-	public int currentEnergy, energyUsed, energyGainRate, energyMax;
+	public int currentEnergy, energyGainRate, energyMax;
     public Slider energySlider;
 	public float energyCD = 2.5F;
 	public float energyCDStart = 0;
@@ -17,12 +17,11 @@ public class PlayerController : MonoBehaviour {
 
 	//---Dash_Variables
 	public float dash_Cooldown = 0.85F;
-	public float dash_StartTime = 0F;
-	public float  dash_Speed = 0.5F;
+	private float  dash_Speed = 0.5F;
 	public bool dashing;
 	public float dashDistance = 4F;
 	public float dashIFrames; //invincible frames
-	public Vector3 dashDirection, dashStart;
+	private Vector3 dashDirection, dashStart;
 
     PlayerAttack pAttack;
     InputManager inputMan;
