@@ -29,7 +29,8 @@ public class InputManager : MonoBehaviour {
             if (mainController.type == ControllerType.Joystick)
             {
                 controllerActive = true;
-                controllerAttackDirection = moveVector;
+                if(moveVector != Vector3.zero)
+                    controllerAttackDirection = moveVector;
             }
             else controllerActive = false;
         }

@@ -144,7 +144,6 @@ MonoBehaviour:
   energyRegain: 0
   startingEnergy: 100
   currentEnergy: 0
-  energyUsed: 0
   energyGainRate: 0
   energyMax: 0
   energySlider: {fileID: 0}
@@ -152,13 +151,9 @@ MonoBehaviour:
   energyCDStart: 0
   movespeed: 0.15
   dash_Cooldown: 0.25
-  dash_StartTime: 0
-  dash_Speed: 0.5
   dashing: 0
   dashDistance: 4
   dashIFrames: 0
-  dashDirection: {x: 0, y: 0, z: 0}
-  dashStart: {x: 0, y: 0, z: 0}
 --- !u!114 &114578565463180232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,6 +188,7 @@ MonoBehaviour:
   dashPressed: 0
   meleePressed: 0
   rangedPressed: 0
+  controllerActive: 0
   moveVector: {x: 0, y: 0, z: 0}
   controllerAttackDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &114729975777718458
