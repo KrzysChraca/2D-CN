@@ -55,11 +55,9 @@ public class PlayerController : MonoBehaviour {
     public IEnumerator EnergyRepletion()
     {
         energyRegain = true;
-        Debug.Log("Energy Replation ");
         yield return new WaitForSeconds(energyCD);
         if (currentEnergy != energyMax)
         {
-            Debug.Log("Adding energy ");
             currentEnergy += energyGainRate;
             energyRegain = true;
             GameManager.GetInstance.enAmount = currentEnergy;
@@ -91,14 +89,18 @@ public class PlayerController : MonoBehaviour {
             if (inputMan.meleePressed && actionAvailable)
             {
                 actionAvailable = false;
-                pAttack.controllerDirection = inputMan.controllerAttackDirection;
+                if (inputMan.controllerActive)
+                    pAttack.controllerDirection = inputMan.controllerAttackDirection;
+                pAttack.SetAttackDirection(inputMan.controllerActive);
                 pAttack.MeleeSetup();
             }
 
             if (inputMan.rangedPressed && actionAvailable)
             {
                 actionAvailable = false;
-                pAttack.controllerDirection = inputMan.controllerAttackDirection;
+                if(inputMan.controllerActive)
+                    pAttack.controllerDirection = inputMan.controllerAttackDirection;
+                pAttack.SetAttackDirection(inputMan.controllerActive);
                 pAttack.RangedSetup();
             }
         }
@@ -108,7 +110,7 @@ public class PlayerController : MonoBehaviour {
         if (currentEnergy - 10 > 0)
         {
             actionAvailable = false;
-            if (inputMan.controllerAttackDirection.x != 0 || inputMan.controllerAttackDirection.y != 0)
+            if (inputMan.controllerActive)
                 dashDirection = inputMan.controllerAttackDirection;
             else dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             dashDirection.z = 0;

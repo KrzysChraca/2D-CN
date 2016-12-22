@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
         set { energyAmount = value; }
     }
 
-    void Start()
+    void Awake()
     {
         _GM = this;
     }
