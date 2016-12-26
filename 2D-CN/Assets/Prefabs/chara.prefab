@@ -38,7 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4420488382203420}
   - component: {fileID: 114424005856318990}
-  - component: {fileID: 114578565463180232}
   - component: {fileID: 212988763573309176}
   - component: {fileID: 50287964554080086}
   - component: {fileID: 61259126957067770}
@@ -154,24 +153,12 @@ MonoBehaviour:
   dashing: 0
   dashDistance: 4
   dashIFrames: 0
---- !u!114 &114578565463180232
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1517348754818250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdfff4c655abac84685eaac906a080ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   attackDirection: {x: 0, y: 0, z: 0}
   controllerDirection: {x: 0, y: 0, z: 0}
   attackAngle: 0
   rangedCost: 0
   meleeCost: 0
   projectile: {fileID: 400574, guid: df797b8fd5ea42742ba2f950fe061838, type: 2}
-  projIndicator: {fileID: 0}
   meleeAttack: {fileID: 4336411208288040}
 --- !u!114 &114617871673927782
 MonoBehaviour:

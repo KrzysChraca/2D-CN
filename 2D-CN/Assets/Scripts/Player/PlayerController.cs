@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(InputManager))]
 public class PlayerController : MonoBehaviour {
 	//---Player_Variables
@@ -23,7 +22,13 @@ public class PlayerController : MonoBehaviour {
 	public float dashIFrames; //invincible frames
 	private Vector3 dashDirection, dashStart;
 
-    PlayerAttack pAttack;
+    //---Attack_Variables
+    public Vector3 attackDirection, controllerDirection;
+    public float attackAngle;
+    public int rangedCost, meleeCost;
+    public Transform projectile,
+                    meleeAttack;
+
     InputManager inputMan;
 
     void Start () {
@@ -31,7 +36,6 @@ public class PlayerController : MonoBehaviour {
         energyRegain = false;
         energyGainRate = 1;
         inputMan = gameObject.GetComponent<InputManager>();
-        pAttack = gameObject.GetComponent<PlayerAttack>();
 		currentEnergy = startingEnergy;
 		//energySlider.value = currentEnergy;
 		canMove = true;
@@ -52,31 +56,7 @@ public class PlayerController : MonoBehaviour {
             Dash();
     }
 
-    public IEnumerator EnergyRepletion()
-    {
-        energyRegain = true;
-        yield return new WaitForSeconds(energyCD);
-        if (currentEnergy != energyMax)
-        {
-            currentEnergy += energyGainRate;
-            energyRegain = true;
-            GameManager.GetInstance.enAmount = currentEnergy;
-        }
-        energyRegain = false;
-    }
-
-	public void useEnergy(int amount)
-	{
-		currentEnergy -= amount;
-        GameManager.GetInstance.enAmount = currentEnergy;
-    }
-
-	public void gainEnergy(int amount){
-        currentEnergy += amount;
-        GameManager.GetInstance.enAmount = currentEnergy;
-    }
-
-	public void Movement(){
+    public void Movement(){
 		if(canMove){
             if(inputMan.moveVector.x != 0 || inputMan.moveVector.y != 0)
                 transform.Translate(inputMan.moveVector*movespeed);
@@ -90,23 +70,51 @@ public class PlayerController : MonoBehaviour {
             {
                 actionAvailable = false;
                 if (inputMan.controllerActive)
-                    pAttack.controllerDirection = inputMan.controllerAttackDirection;
-                pAttack.SetAttackDirection(inputMan.controllerActive);
-                pAttack.MeleeSetup();
+                    controllerDirection = inputMan.controllerAttackDirection;
+                SetAttackDirection(inputMan.controllerActive);
+                MeleeSetup();
             }
 
             if (inputMan.rangedPressed && actionAvailable)
             {
                 actionAvailable = false;
                 if(inputMan.controllerActive)
-                    pAttack.controllerDirection = inputMan.controllerAttackDirection;
-                pAttack.SetAttackDirection(inputMan.controllerActive);
-                pAttack.RangedSetup();
+                    controllerDirection = inputMan.controllerAttackDirection;
+                SetAttackDirection(inputMan.controllerActive);
+                RangedSetup();
             }
         }
 	}
 
-	IEnumerator StartDash(){
+    #region Energy
+    public IEnumerator EnergyRepletion()
+    {
+        energyRegain = true;
+        yield return new WaitForSeconds(energyCD);
+        if (currentEnergy != energyMax)
+        {
+            currentEnergy += energyGainRate;
+            energyRegain = true;
+            GameManager.GetInstance.enAmount = currentEnergy;
+        }
+        energyRegain = false;
+    }
+
+    public void useEnergy(int amount)
+    {
+        currentEnergy -= amount;
+        GameManager.GetInstance.enAmount = currentEnergy;
+    }
+
+    public void gainEnergy(int amount)
+    {
+        currentEnergy += amount;
+        GameManager.GetInstance.enAmount = currentEnergy;
+    }
+    #endregion
+
+    #region Dash
+    IEnumerator StartDash(){
         if (currentEnergy - 10 > 0)
         {
             actionAvailable = false;
@@ -137,6 +145,64 @@ public class PlayerController : MonoBehaviour {
             canMove = true;
         }
     }
+    #endregion
+
+    #region Attack
+    public void SetAttackDirection(bool controller)
+    {
+        if (controller)
+        {
+            attackDirection = controllerDirection;
+        }
+        else attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //Get the direction towards the mouse
+        attackDirection.z = transform.position.z;
+        attackDirection = attackDirection.normalized;
+    }
+
+    public void SetMeleeWeapon(Transform currWeapon)
+    {
+        meleeAttack = currWeapon;
+    }
+
+    public void SetRangedWeapon(Transform currWeapon)
+    {
+        projectile = currWeapon;
+    }
+
+    public void MeleeSetup()
+    {
+        Debug.Log("Started the Melee attack ");
+        attackAngle = Utility._util.RotateTowards(attackDirection, meleeAttack.transform);
+        meleeAttack.GetComponent<Melee>().AttackStart(attackAngle, this.transform.position);
+        //meleeAttack.transform.RotateAround(transform.position, Vector3.forward, attackAngle);
+        StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
+        StartCoroutine(MeleeCooldown());
+
+        //Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);
+    }
+
+    public IEnumerator MeleeCooldown()
+    {
+        yield return new WaitForSeconds(meleeAttack.GetComponent<Melee>().attackCooldown);
+        actionAvailable = true;
+    }
+
+    public void RangedSetup()
+    {
+        projectile.GetComponent<Projectile>().moveDir = attackDirection;
+
+        Instantiate(projectile,
+            transform.position,
+            Quaternion.Euler(new Vector3(0, 0, Utility._util.RotateTowards(attackDirection, projectile))));
+        StartCoroutine(RangedCooldown(projectile.GetComponent<Projectile>().fireRate));
+    }
+
+    public IEnumerator RangedCooldown(float rangedCooldown)
+    {
+        yield return new WaitForSeconds(rangedCooldown);
+        actionAvailable = true;
+    }
+    #endregion
 
     //for locating where player is
     private static Location location;

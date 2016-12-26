@@ -5,6 +5,7 @@ public abstract class Melee : MonoBehaviour {
 
     public float attackDuration = 0.1F,
         attackCooldown = 1F,
+        attackSpeed = 5f,
         attackDmg = 1f;
     public bool attacking;
     public Collider2D weaponTrigger;
@@ -23,6 +24,11 @@ public abstract class Melee : MonoBehaviour {
             Debug.Log(string.Format("Missing collider for: {0}", gameObject.name));
             weaponTrigger = gameObject.AddComponent<PolygonCollider2D>();
         }
+    }
+
+    public virtual void AttackStart(float rotation, Vector3 origin)
+    {
+        Debug.Log("Starting attack");
     }
 
     public virtual IEnumerator Attack(Vector3 atkDir)
