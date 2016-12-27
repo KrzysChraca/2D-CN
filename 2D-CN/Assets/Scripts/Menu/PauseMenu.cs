@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour {
 
     public Transform canvas;
+    public Transform player;
 	
 	// Update is called once per frame
 	void Update () {
@@ -13,9 +14,8 @@ public class PauseMenu : MonoBehaviour {
 
     void ScanForKeyStroke()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))  
             TogglePauseMenu();
-            
     }
 
     public void TogglePauseMenu()
@@ -25,7 +25,7 @@ public class PauseMenu : MonoBehaviour {
             canvas.gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
-        else
+        if(canvas.gameObject.activeInHierarchy == true)
         {
             canvas.gameObject.SetActive(false);
             Time.timeScale = 1.0f;
