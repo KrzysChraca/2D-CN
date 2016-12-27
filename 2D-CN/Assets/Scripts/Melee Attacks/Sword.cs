@@ -19,7 +19,7 @@ public class Sword : Melee{
 
     void Update()
     {
-        if (attacking)
+        //if (attacking)
             //transform.RotateAround(start, Vector3.forward, -offRot * Time.deltaTime * attackSpeed);
     }
 
@@ -33,7 +33,7 @@ public class Sword : Melee{
 
     public override void AttackStart(float rotation, Vector3 origin)
     {
-        transform.RotateAround(origin, Vector3.forward, rotation-45);
+        transform.RotateAround(origin, Vector3.forward, rotation-90);
         start = origin;
         offRotation = Quaternion.Euler(0,0,90);
     }

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(InputSupervisor))]
 public class PlayerController : MonoBehaviour {
 	//---Player_Variables
 	private bool canMove;
@@ -29,13 +29,13 @@ public class PlayerController : MonoBehaviour {
     public Transform projectile,
                     meleeAttack;
 
-    InputManager inputMan;
+    InputSupervisor inputMan;
 
     void Start () {
         energyMax = startingEnergy;
         energyRegain = false;
         energyGainRate = 1;
-        inputMan = gameObject.GetComponent<InputManager>();
+        inputMan = gameObject.GetComponent<InputSupervisor>();
 		currentEnergy = startingEnergy;
 		//energySlider.value = currentEnergy;
 		canMove = true;

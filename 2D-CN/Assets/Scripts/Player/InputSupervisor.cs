@@ -2,7 +2,7 @@
 using System.Collections;
 using Rewired;
 
-public class InputManager : MonoBehaviour {
+public class InputSupervisor : MonoBehaviour {
     public int playerID;
     public bool dashPressed, meleePressed, rangedPressed, controllerActive;
 
@@ -29,21 +29,23 @@ public class InputManager : MonoBehaviour {
             if (mainController.type == ControllerType.Joystick)
             {
                 controllerActive = true;
-                if(moveVector != Vector3.zero)
+                if (moveVector != Vector3.zero)
                     controllerAttackDirection = moveVector;
+                else if (rePlayer.GetAxisRaw("Target Horizontal") > 0 || rePlayer.GetAxisRaw("Target Vertical") > 0)
+                    controllerAttackDirection = new Vector3(rePlayer.GetAxisRaw("Target Horizontal"), rePlayer.GetAxisRaw("Target Vertical"), 0);
             }
             else controllerActive = false;
         }
 
-        if (rePlayer.GetButtonDown(2)) //Dash Button pressed
+        if (rePlayer.GetButtonDown("Dash0")) //Dash Button pressed
             dashPressed = true;
         else dashPressed = false;
 
-        if (rePlayer.GetButtonDown(3)) //Melee Button pressed
+        if (rePlayer.GetButtonDown("Melee")) //Melee Button pressed
             meleePressed = true;
         else meleePressed = false;
 
-        if (rePlayer.GetButton(4)) //Ranged Button pressed
+        if (rePlayer.GetButton("Ranged")) //Ranged Button pressed
             rangedPressed = true;
         else rangedPressed = false;
     }
