@@ -48,6 +48,9 @@ public class InputSupervisor : MonoBehaviour {
         if (rePlayer.GetButton("Ranged")) //Ranged Button pressed
             rangedPressed = true;
         else rangedPressed = false;
+
+        if (rePlayer.GetButtonDown("Pause Menu"))
+            PauseMenu.GetInstance.TogglePauseMenu();
     }
 
     public Vector2 GetMousePosition()

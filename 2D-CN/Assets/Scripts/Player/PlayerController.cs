@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(InputSupervisor))]
-public class PlayerController : MonoBehaviour {
-	//---Player_Variables
-	private bool canMove;
+public class PlayerController : MonoBehaviour, IDamagable {
+    //---Player_Variables
+    public int startingHealth = 100;
+    public int currentHealth;
+    bool isDead;
+    bool damaged;
+    private bool canMove;
     public bool actionAvailable, energyRegain;
 	public int startingEnergy = 100;
 	public int currentEnergy, energyGainRate, energyMax;
@@ -13,13 +18,12 @@ public class PlayerController : MonoBehaviour {
 	public float energyCD = 2.5F;
 	public float energyCDStart = 0;
 	public float movespeed = 0.15F;
-
+    public bool invincible = false;
 	//---Dash_Variables
 	public float dash_Cooldown = 0.85F;
 	private float  dash_Speed = 0.5F;
 	public bool dashing;
 	public float dashDistance = 4F;
-	public float dashIFrames; //invincible frames
 	private Vector3 dashDirection, dashStart;
 
     //---Attack_Variables
@@ -118,6 +122,7 @@ public class PlayerController : MonoBehaviour {
         if (currentEnergy - 10 > 0)
         {
             actionAvailable = false;
+            StartCoroutine(Invincibility(0.025f, 0.085f));
             if (inputMan.controllerActive)
                 dashDirection = inputMan.controllerAttackDirection;
             else dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
@@ -125,11 +130,10 @@ public class PlayerController : MonoBehaviour {
             dashStart = transform.position;
             dashing = true;
             useEnergy(10);
-            yield return new WaitForSeconds(dash_Cooldown);
         }
             
         else Debug.Log("Not enough energy to dash");
-        yield return new WaitForSeconds(dash_Cooldown/2);
+        yield return new WaitForSeconds(dash_Cooldown);
         actionAvailable = true;
     }
 
@@ -203,6 +207,22 @@ public class PlayerController : MonoBehaviour {
         actionAvailable = true;
     }
     #endregion
+
+    IEnumerator Invincibility(float delay, float duration)
+    {
+        yield return new WaitForSeconds(delay);
+        invincible = true;
+        yield return new WaitForSeconds(duration);
+        invincible = false;
+    }
+
+    public void RecieveDamage(int dmg)
+    {
+        if (!invincible)
+            currentHealth -= dmg;
+        if (currentHealth <= 0 && !isDead)
+            isDead = true;
+    }
 
     //for locating where player is
     private static Location location;

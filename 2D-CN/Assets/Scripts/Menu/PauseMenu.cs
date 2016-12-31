@@ -4,28 +4,29 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
 
-    public Transform canvas;
-    public Transform player;
-	
-	// Update is called once per frame
-	void Update () {
-        ScanForKeyStroke();
+    private static PauseMenu _pm = null;
+    public static PauseMenu GetInstance
+    {
+        get { return _pm; }
     }
 
-    void ScanForKeyStroke()
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))  
-            TogglePauseMenu();
+        _pm = this;
     }
+
+    public Transform canvas;
+    public Transform player;
 
     public void TogglePauseMenu()
     {
         if(canvas.gameObject.activeInHierarchy == false)
         {
+            Debug.Log("Pause Menu toggled");
             canvas.gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
-        if(canvas.gameObject.activeInHierarchy == true)
+        else if(canvas.gameObject.activeInHierarchy == true)
         {
             canvas.gameObject.SetActive(false);
             Time.timeScale = 1.0f;

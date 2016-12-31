@@ -5,8 +5,8 @@ public abstract class Melee : MonoBehaviour {
 
     public float attackDuration = 0.1F,
         attackCooldown = 1F,
-        attackSpeed = 5f,
-        attackDmg = 1f;
+        attackSpeed = 5f;
+    public int attackDmg = 1;
     public bool attacking;
     public Collider2D weaponTrigger;
 

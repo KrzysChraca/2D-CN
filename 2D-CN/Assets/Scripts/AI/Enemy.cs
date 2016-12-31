@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour, IDamagable {
         }
 	}
 
-    public void RecieveDamage(float dmg)
+    public void RecieveDamage(int dmg)
     {
         health = health - dmg;
 
