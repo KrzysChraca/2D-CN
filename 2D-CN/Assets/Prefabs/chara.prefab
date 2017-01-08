@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 212988763573309176}
   - component: {fileID: 50287964554080086}
   - component: {fileID: 61259126957067770}
-  - component: {fileID: 114617871673927782}
+  - component: {fileID: 114950329354206750}
   m_Layer: 9
   m_Name: chara
   m_TagString: Player
@@ -55,9 +55,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1493525723834482}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.007, y: 0.295, z: 0}
-  m_LocalScale: {x: 0.02, y: 0.38, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.365, y: -0.032, z: 0}
+  m_LocalScale: {x: 0.41345453, y: 0.020454338, z: 1}
   m_Children: []
   m_Father: {fileID: 4420488382203420}
   m_RootOrder: 0
@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc38362a7f3a7040b2deb42cd9a828b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
   actionAvailable: 0
   energyRegain: 0
   startingEnergy: 100
@@ -149,10 +151,10 @@ MonoBehaviour:
   energyCD: 0.2
   energyCDStart: 0
   movespeed: 0.15
+  invincible: 0
   dash_Cooldown: 0.25
   dashing: 0
   dashDistance: 4
-  dashIFrames: 0
   attackDirection: {x: 0, y: 0, z: 0}
   controllerDirection: {x: 0, y: 0, z: 0}
   attackAngle: 0
@@ -160,24 +162,6 @@ MonoBehaviour:
   meleeCost: 0
   projectile: {fileID: 400574, guid: df797b8fd5ea42742ba2f950fe061838, type: 2}
   meleeAttack: {fileID: 4336411208288040}
---- !u!114 &114617871673927782
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1517348754818250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f06ae4a45f94e944bb8542f8e879fb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerID: 0
-  dashPressed: 0
-  meleePressed: 0
-  rangedPressed: 0
-  controllerActive: 0
-  moveVector: {x: 0, y: 0, z: 0}
-  controllerAttackDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &114729975777718458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -189,11 +173,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 653bf429691c97941bc087dccea1a3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 0.1
-  attackCooldown: 1
+  attackDuration: 0.25
+  attackCooldown: 0.3
+  attackSpeed: 5
   attackDmg: 1
   attacking: 0
   weaponTrigger: {fileID: 60395231458044706}
+  player: {fileID: 114424005856318990}
+--- !u!114 &114950329354206750
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1517348754818250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f45df2536213df45bbc873a25c373c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 0
+  dashPressed: 0
+  meleePressed: 0
+  rangedPressed: 0
+  controllerActive: 0
+  moveVector: {x: 0, y: 0, z: 0}
+  controllerAttackDirection: {x: 0, y: 0, z: 0}
 --- !u!212 &212203234942889346
 SpriteRenderer:
   m_ObjectHideFlags: 1

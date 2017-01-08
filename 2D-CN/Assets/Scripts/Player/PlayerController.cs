@@ -175,8 +175,9 @@ public class PlayerController : MonoBehaviour, IDamagable {
 
     public void MeleeSetup()
     {
-        Debug.Log("Started the Melee attack ");
+
         attackAngle = Utility._util.RotateTowards(attackDirection, meleeAttack.transform);
+        Debug.Log("Melee attack new rotation angle " + attackAngle);
         meleeAttack.GetComponent<Melee>().AttackStart(attackAngle, this.transform.position);
         //meleeAttack.transform.RotateAround(transform.position, Vector3.forward, attackAngle);
         StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
@@ -194,7 +195,8 @@ public class PlayerController : MonoBehaviour, IDamagable {
     public void RangedSetup()
     {
         projectile.GetComponent<Projectile>().moveDir = attackDirection;
-
+        attackAngle = Utility._util.RotateTowards(attackDirection, projectile);
+        Debug.Log("Ranged attack rotation " + attackAngle);
         Instantiate(projectile,
             transform.position,
             Quaternion.Euler(new Vector3(0, 0, Utility._util.RotateTowards(attackDirection, projectile))));

@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour {
 
 	public void Damage(int damage){
 		health -= damage;
-		Debug.Log ("Damage Taken");
+		//Debug.Log ("Damage Taken");
 		//animate damage is taken
 	}
 

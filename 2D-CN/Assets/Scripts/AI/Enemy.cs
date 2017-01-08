@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour, IDamagable {
 	}
 
 	public void OnTriggerEnter2D(Collider2D other){
-        Debug.Log("Collided with " + other.name);
+        //Debug.Log("Collided with " + other.name);
 
 		//if (other.gameObject.CompareTag ("Attack")) {
 
@@ -40,6 +40,6 @@ public class Enemy : MonoBehaviour, IDamagable {
     {
         health = health - dmg;
 
-        Debug.Log(health);
+        //Debug.Log(health);
     }
 }
