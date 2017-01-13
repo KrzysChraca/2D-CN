@@ -6,7 +6,7 @@ public class Sword : Melee{
     Quaternion offRotation;
     Vector3 start;
     public PlayerController player;
-    float offRot, startAngle, targetAngle;
+    float offRot, startAngle;
 
     public override void Awake()
     {
@@ -24,29 +24,29 @@ public class Sword : Melee{
         base.Start();
         weaponTrigger.enabled = false;
         weaponTrigger.GetComponent<SpriteRenderer>().enabled = false;
-        attackDuration = 5.0F; //How long the attack will last
+        attackDuration = 2.0F; //How long the attack will last
         attackCooldown = 0.5F; //How long till the player can do another attack
         attackDmg = 10;
-        attackSpeed = 180f;
+        attackSpeed = 50f;
         offRot = 100;
-        startAngle = targetAngle = 0;
+        startAngle = 0;
         //Debug.Log(string.Format("The sword trigger is {0}", weaponTrigger.name));
     }
 
     void RotateSword()
     {
-        Debug.Log("Target Rotation " + (targetAngle));
-        if(gameObject.transform.rotation.z <= targetAngle)
+        Debug.Log("Target Rotation " + (startAngle - offRot));
+        if(gameObject.transform.rotation.z > (startAngle - offRot))
             transform.RotateAround(player.transform.position, Vector3.forward, Time.deltaTime * -attackSpeed);
     }
 
     public override void AttackStart(float rotation, Vector3 origin)
     {
         transform.RotateAround(origin, Vector3.forward, rotation-90);
-
+        
         start = origin;
+        offRotation = Quaternion.Euler(0,0,90);
         startAngle = gameObject.transform.rotation.eulerAngles.z;
-        targetAngle = (offRot + startAngle)%360;
         Debug.Log("Starting angle " + startAngle);
     }
 
