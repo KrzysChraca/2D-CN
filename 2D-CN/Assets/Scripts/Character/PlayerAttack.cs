@@ -45,7 +45,7 @@ public class PlayerAttack : MonoBehaviour {
         meleeAttacking = true;
         attackAngle = Utility._util.RotateTowards(attackDirection, meleeAttack.transform);
         meleeAttack.transform.RotateAround(player.transform.position, Vector3.forward, attackAngle - 90);
-        StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
+        //StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
         StartCoroutine(MeleeCooldown());
 
         //Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);

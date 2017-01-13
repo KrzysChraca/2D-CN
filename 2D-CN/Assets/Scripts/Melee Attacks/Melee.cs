@@ -31,9 +31,9 @@ public abstract class Melee : MonoBehaviour {
         Debug.Log("Starting attack");
     }
 
-    public virtual IEnumerator Attack(Vector3 atkDir)
+    public virtual IEnumerator Attack()
     {
-        Debug.Log("Attacking in this direction " + atkDir);
+        //Debug.Log("Attacking in this direction " + atkDir);
         yield return new WaitForSeconds(attackDuration);
         attacking = false;
         weaponTrigger.enabled = false;

@@ -175,11 +175,10 @@ public class PlayerController : MonoBehaviour, IDamagable {
 
     public void MeleeSetup()
     {
-        Debug.Log("Started the Melee attack ");
         attackAngle = Utility._util.RotateTowards(attackDirection, meleeAttack.transform);
+        //StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
         meleeAttack.GetComponent<Melee>().AttackStart(attackAngle, this.transform.position);
         //meleeAttack.transform.RotateAround(transform.position, Vector3.forward, attackAngle);
-        StartCoroutine(meleeAttack.GetComponent<Melee>().Attack(attackDirection));
         StartCoroutine(MeleeCooldown());
 
         //Debug.DrawLine(meleeAttack.transform.position, attackDirection, Color.red, 2.0f);

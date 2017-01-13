@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 50287964554080086}
   - component: {fileID: 61259126957067770}
   - component: {fileID: 114950329354206750}
+  - component: {fileID: 114947200399024798}
   m_Layer: 9
   m_Name: chara
   m_TagString: Player
@@ -56,8 +57,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1493525723834482}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.365, y: -0.032, z: 0}
-  m_LocalScale: {x: 0.41345453, y: 0.020454338, z: 1}
+  m_LocalPosition: {x: 0.251, y: -0.021, z: 0}
+  m_LocalScale: {x: 0.26, y: 0.020454338, z: 1}
   m_Children: []
   m_Father: {fileID: 4420488382203420}
   m_RootOrder: 0
@@ -173,13 +174,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 653bf429691c97941bc087dccea1a3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 0.25
-  attackCooldown: 0.3
-  attackSpeed: 5
-  attackDmg: 1
+  attackDuration: 1.2
+  attackCooldown: 0.5
+  attackSpeed: 7.5
+  attackDmg: 10
   attacking: 0
   weaponTrigger: {fileID: 60395231458044706}
   player: {fileID: 114424005856318990}
+  lastStep: 1
+  smoothStep: 1
+  step: 2.0137544
+--- !u!114 &114947200399024798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1517348754818250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f06ae4a45f94e944bb8542f8e879fb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 0
+  dashPressed: 0
+  meleePressed: 0
+  rangedPressed: 0
+  controllerActive: 0
+  moveVector: {x: 0, y: 0, z: 0}
+  controllerAttackDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &114950329354206750
 MonoBehaviour:
   m_ObjectHideFlags: 1

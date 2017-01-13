@@ -29,10 +29,11 @@ public class InputSupervisor : MonoBehaviour {
             if (mainController.type == ControllerType.Joystick)
             {
                 controllerActive = true;
-                if (moveVector != Vector3.zero)
-                    controllerAttackDirection = moveVector;
-                else if (rePlayer.GetAxisRaw("Target Horizontal") > 0 || rePlayer.GetAxisRaw("Target Vertical") > 0)
+                //if (moveVector != Vector3.zero)
+                //    controllerAttackDirection = moveVector;
+                if (rePlayer.GetAxisRaw("Target Horizontal") > 0 || rePlayer.GetAxisRaw("Target Vertical") > 0)
                     controllerAttackDirection = new Vector3(rePlayer.GetAxisRaw("Target Horizontal"), rePlayer.GetAxisRaw("Target Vertical"), 0);
+                else controllerAttackDirection = moveVector;
             }
             else controllerActive = false;
         }
