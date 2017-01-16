@@ -74,7 +74,8 @@ public class PlayerController : MonoBehaviour, IDamagable {
             {
                 actionAvailable = false;
                 if (inputMan.controllerActive)
-                    controllerDirection = inputMan.controllerAttackDirection;
+                    controllerDirection = CheckInputVector();
+
                 SetAttackDirection(inputMan.controllerActive);
                 MeleeSetup();
             }
@@ -83,12 +84,22 @@ public class PlayerController : MonoBehaviour, IDamagable {
             {
                 actionAvailable = false;
                 if(inputMan.controllerActive)
-                    controllerDirection = inputMan.controllerAttackDirection;
+                    controllerDirection = CheckInputVector();
+
                 SetAttackDirection(inputMan.controllerActive);
                 RangedSetup();
             }
         }
 	}
+
+    Vector3 CheckInputVector()
+    {
+        if (inputMan.controllerAttackDirection != Vector3.zero)
+            return inputMan.controllerAttackDirection;
+        else if (inputMan.moveVector != Vector3.zero)
+            return inputMan.moveVector;
+        else return inputMan.lastInputDirection;
+    }
 
     #region Energy
     public IEnumerator EnergyRepletion()
@@ -124,7 +135,7 @@ public class PlayerController : MonoBehaviour, IDamagable {
             actionAvailable = false;
             StartCoroutine(Invincibility(0.025f, 0.085f));
             if (inputMan.controllerActive)
-                dashDirection = inputMan.controllerAttackDirection;
+                dashDirection = CheckInputVector();
             else dashDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             dashDirection.z = 0;
             dashStart = transform.position;
@@ -156,7 +167,7 @@ public class PlayerController : MonoBehaviour, IDamagable {
     {
         if (controller)
         {
-            attackDirection = controllerDirection;
+            attackDirection = CheckInputVector();
         }
         else attackDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position; //Get the direction towards the mouse
         attackDirection.z = transform.position.z;

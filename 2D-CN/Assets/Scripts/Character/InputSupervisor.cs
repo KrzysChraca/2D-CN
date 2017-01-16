@@ -6,7 +6,7 @@ public class InputSupervisor : MonoBehaviour {
     public int playerID;
     public bool dashPressed, meleePressed, rangedPressed, controllerActive;
 
-    public Vector3 moveVector, controllerAttackDirection;
+    public Vector3 moveVector, controllerAttackDirection, lastInputDirection, lastControllerDirection;
     Player rePlayer;
     public Controller mainController;
 
@@ -16,24 +16,36 @@ public class InputSupervisor : MonoBehaviour {
         rePlayer = ReInput.players.GetPlayer(playerID);
         dashPressed = meleePressed = rangedPressed = false;
         controllerAttackDirection = new Vector3();
+        moveVector = new Vector3(1, 0, 0);
+        lastInputDirection = moveVector;
     }
 
     void Update()
     {
         mainController = rePlayer.controllers.GetLastActiveController();
-        
+
         moveVector.x = rePlayer.GetAxisRaw("Horizontal");
         moveVector.y = rePlayer.GetAxisRaw("Vertical");
-        if(mainController != null)
+
+
+        if (mainController != null)
         {
             if (mainController.type == ControllerType.Joystick)
             {
                 controllerActive = true;
-                //if (moveVector != Vector3.zero)
-                //    controllerAttackDirection = moveVector;
                 if (rePlayer.GetAxisRaw("Target Horizontal") > 0 || rePlayer.GetAxisRaw("Target Vertical") > 0)
                     controllerAttackDirection = new Vector3(rePlayer.GetAxisRaw("Target Horizontal"), rePlayer.GetAxisRaw("Target Vertical"), 0);
-                else controllerAttackDirection = moveVector;
+                else if (controllerAttackDirection == Vector3.zero)
+                {
+                    if (moveVector == Vector3.zero)
+                        controllerAttackDirection = moveVector;
+                    else lastInputDirection = moveVector;
+                }
+                else
+                {
+                    lastInputDirection = controllerAttackDirection;
+                    controllerAttackDirection = Vector3.zero;
+                }
             }
             else controllerActive = false;
         }
