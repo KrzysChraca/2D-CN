@@ -35,13 +35,13 @@ public class InputSupervisor : MonoBehaviour {
                 controllerActive = true;
                 if (rePlayer.GetAxisRaw("Target Horizontal") > 0 || rePlayer.GetAxisRaw("Target Vertical") > 0)
                     controllerAttackDirection = new Vector3(rePlayer.GetAxisRaw("Target Horizontal"), rePlayer.GetAxisRaw("Target Vertical"), 0);
-                else if (controllerAttackDirection == Vector3.zero)
-                {
-                    if (moveVector == Vector3.zero)
-                        controllerAttackDirection = moveVector;
-                    else lastInputDirection = moveVector;
-                }
-                else
+                //else if (controllerAttackDirection == Vector3.zero)
+                //{
+                //    if (moveVector == Vector3.zero)
+                //        controllerAttackDirection = moveVector;
+                //    else lastInputDirection = moveVector;
+                //}
+                else if(controllerAttackDirection != Vector3.zero)
                 {
                     lastInputDirection = controllerAttackDirection;
                     controllerAttackDirection = Vector3.zero;

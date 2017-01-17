@@ -96,8 +96,8 @@ public class PlayerController : MonoBehaviour, IDamagable {
     {
         if (inputMan.controllerAttackDirection != Vector3.zero)
             return inputMan.controllerAttackDirection;
-        else if (inputMan.moveVector != Vector3.zero)
-            return inputMan.moveVector;
+        //else if (inputMan.moveVector != Vector3.zero)
+        //    return inputMan.moveVector;
         else return inputMan.lastInputDirection;
     }
 
