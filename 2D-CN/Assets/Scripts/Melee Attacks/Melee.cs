@@ -37,7 +37,6 @@ public abstract class Melee : MonoBehaviour {
         yield return new WaitForSeconds(attackDuration);
         attacking = false;
         weaponTrigger.enabled = false;
-        PlayerAttack.meleeAttacking = false;
     }
 
     public virtual void OnTriggerEnter2D(Collider2D col)

@@ -64,6 +64,5 @@ public class Sword : Melee{
         attacking = false;
         weaponTrigger.GetComponent<SpriteRenderer>().enabled = false;
         weaponTrigger.enabled = false;
-        PlayerAttack.meleeAttacking = false;
     }
 }

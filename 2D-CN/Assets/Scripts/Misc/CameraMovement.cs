@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraMovement : MonoBehaviour {
 
     public float followSpeed, followOffset;
-    private Transform target;
+    public Transform target;
     public Transform deadZone;
     // Vector3 followOffset;
     public bool blnTransition, blnFollow, 
@@ -15,9 +15,6 @@ public class CameraMovement : MonoBehaviour {
         blnTransition = false;
         followSpeed = 0.025f;
         followOffset = 1.05f;
-		target = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        //followOffset = new Vector3(0, 0, this.transform.position.z);
 	}
 
 	void LateUpdate()

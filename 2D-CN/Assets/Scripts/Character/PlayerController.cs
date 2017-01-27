@@ -8,8 +8,7 @@ public class PlayerController : MonoBehaviour, IDamagable {
     //---Player_Variables
     public int startingHealth = 100;
     public int currentHealth;
-    bool isDead;
-    bool damaged;
+    bool isDead, damaged;
     private bool canMove;
     public bool actionAvailable, energyRegain;
 	public int startingEnergy = 100;
@@ -33,18 +32,27 @@ public class PlayerController : MonoBehaviour, IDamagable {
     public Transform projectile,
                     meleeAttack;
 
-    InputSupervisor inputMan;
+    public bool Networked = false;
 
-    void Start () {
+    InputSupervisor inputMan;
+    public GameObject FollowCamera;
+
+    void Start()
+    {
         energyMax = startingEnergy;
         energyRegain = false;
         energyGainRate = 1;
         inputMan = gameObject.GetComponent<InputSupervisor>();
-		currentEnergy = startingEnergy;
-		//energySlider.value = currentEnergy;
-		canMove = true;
+        currentEnergy = startingEnergy;
+        //energySlider.value = currentEnergy;
+        canMove = true;
         actionAvailable = true;
         GameManager.GetInstance.enAmount = currentEnergy;
+        if (!Networked)
+        { 
+            FollowCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            FollowCamera.GetComponent<CameraMovement>().target = this.gameObject.transform;
+        }
     }
 
 	void Update () {
@@ -53,11 +61,14 @@ public class PlayerController : MonoBehaviour, IDamagable {
 
     void FixedUpdate()
     {
-        Movement();
-        if (currentEnergy < energyMax && !energyRegain)
-            StartCoroutine(EnergyRepletion());
-        if (dashing)
-            Dash();
+        if (!Networked)
+        {
+            Movement();
+            if (currentEnergy < energyMax && !energyRegain)
+                StartCoroutine(EnergyRepletion());
+            if (dashing)
+                Dash();
+        }
     }
 
     public void Movement(){
